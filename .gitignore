@@ -1,0 +1,9 @@
+.DS_Store
+node_modules/
+.awcache/
+_site
+.sass-cache
+node_modules
+.jekyll-metadata
+.jekyll-cache
+.bundle
