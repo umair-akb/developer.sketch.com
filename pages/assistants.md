@@ -1,10 +1,9 @@
 ---
 title: Introduction
 section: assistants
-chapter: Assistants
 permalink: /assistants/
-order: 1
-excerpt: Sketch documents are stored as ZIP archives containing JSON encoded data
+order: 2
+excerpt: Sketch Assistants introduction.
 ---
 
-Introduction.
+TODO
