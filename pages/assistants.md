@@ -1,5 +1,5 @@
 ---
-title: Assistants
+title: Assistants (Beta)
 section: assistants
 permalink: /assistants/
 order: 2
