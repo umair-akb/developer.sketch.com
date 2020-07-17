@@ -53,20 +53,20 @@ Once the resulting `.tgz` archive is uploaded, add the Assistant to a Sketch doc
 
 Sketch does not check if there are newer versions of your published Assistant, so it won't automatically prompt users to update Assistants added to documents.
 
-If there's a newer version of an Assistant available, and you want to update a document to take advantage of it you'll need to re-add the Assistant to that document. Either via the _Assistants > Add from URL_ menu option, or add the Assistant again from [sketch.com](https://www.sketch.com).
+If there's a newer version of an Assistant available, and you want to update a document to take advantage of it you'll need to re-add the Assistant to that document. Either via the ⚙️ › _Add from Archive…_ option within the _Manage Assistants…_ sheet for your document, or add the Assistant again from [sketch.com](https://www.sketch.com).
 
 ## Listing on [sketch.com](https://www.sketch.com)
 
 Once published to npm you can opt-in to having your Assistant listed on [sketch.com](https://www.sketch.com). The benefits of doing this are:
 
-- A publically hosted homepage for your Assistant on [sketch.com](https://www.sketch.com), automatically generated from your Assistant's README and `package.json` data.
+- A publicly hosted homepage for your Assistant on [sketch.com](https://www.sketch.com), automatically generated from your Assistant's README and `package.json` data.
 - Your Assistant will become discoverable to a wider audience.
 - The homepage will include a "Add to Sketch" button that will open Sketch and add the latest version of your Assistant to the current document. Read more about this in the [One-click add button](/assistants/one-click-add) documentation.
 
 ### Requirements
 
 The following requirements must be met to get your Assistant listed.
-1. Published publically to npm
+1. Published publicly to npm
 1. Assistant's `package.json` must contain:
     1. Version number, must be `1.0.0` or greater
     1. [Keywords](https://docs.npmjs.com/files/package.json#keywords) `sketch assistant` and `public`
