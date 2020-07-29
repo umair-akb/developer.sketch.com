@@ -23,4 +23,4 @@ sketch-assistants "./*.sketch"
 
 Alternatively you can run a custom set of Assistants against a document or configure a new Assistant using the `--workspace` and `--assistant` flags respectively.
 
-> 💡 For in-depth [installation and usage]((https://github.com/sketch-hq/sketch-assistants/tree/main/packages/cli)) instructions head to GitHub.
+> 💡 For in-depth [installation and usage](https://github.com/sketch-hq/sketch-assistants/tree/main/packages/cli) instructions head to GitHub.
