@@ -9,7 +9,7 @@ excerpt: Writing a custom Sketch Assistant rule gives you full control over the 
 
 This guide shows how to create an Assistant rule that checks the contents of Text Layers to make sure they don’t include "Lorem Ipsum" placeholder text. It finishes describing how to evolve the rule to disallow any string using Assistant configuration.
 
-> 💡Make sure you've already followed the [Getting Started](/assistants/getting-started) guide. You'll need a working local Assistant project that you can edit, rebuild and see the resulting changes in Sketch if you want to follow along with this guide.
+> 💡 Make sure you've already followed the [Getting Started](/assistants/getting-started) guide. You'll need a working local Assistant project that you can edit, rebuild and see the resulting changes in Sketch if you want to follow along with this guide.
 
 ## Adding a custom rule
 
@@ -91,7 +91,7 @@ async (context) => {
 }
 ```
 
-> 💡If you haven't already now might be a good time to run `npm run package-tarball` and test your work in Sketch.
+> 💡 If you haven't already now might be a good time to run `npm run package-tarball` and test your work in Sketch.
 
 A few points to note:
 
@@ -169,6 +169,6 @@ const assistant: AssistantPackage = async () => {
 export default assistant
 ```
 
-> 💡If you felt limited by having to test your Assistant in Sketch during this guide, without access to familiarities like `console.log` then have a read of our [Running and testing Assistants](/assistants/run-and-test) guide. This will discuss how to test your Assistant in Node, or run it from the command line.
+> 💡 If you felt limited by having to test your Assistant in Sketch during this guide, without access to familiarities like `console.log` then have a read of our [Running and testing Assistants](/assistants/run-and-test) guide. This will discuss how to test your Assistant in Node, or run it from the command line.
 
-> 👉Next steps could include [Extending an Assistant](/assistants/extend-assistants), or deep diving into the [API reference](/assistants/api).
+> 👉 Next steps could include [Extending an Assistant](/assistants/extend-assistants), or deep diving into the [API reference](/assistants/type-reference).
