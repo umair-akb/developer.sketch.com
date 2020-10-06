@@ -20,6 +20,7 @@ A Sketch document.
 | sharedLayerStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span> | The list of all shared layer styles defined in the document. |
 | sharedTextStyles<span class="arg-type">[SharedStyle](#shared-style)[]</span> | The list of all shared text styles defined in the document. |
 | colors<span class="arg-type">[ColorAsset](#color-asset)[]</span> | A list of color assets defined in the document. Mutating the returned array will update the document colors. |
+| swatches<span class="arg-type">[Swatch](#swatch)[]</span> | A list of swatches defined in the document. Mutating the returned array will update the document swatches. |
 | gradients<span class="arg-type">[GradientAsset](#gradient-asset)[]</span> | A list of gradient assets defined in the document. Mutating the returned array will update the document gradients. |
 | colorSpace<span class="arg-type">[ColorSpace](#documentcolorspace)</span> | The color space of the document. |
 
@@ -151,33 +152,33 @@ A method to help find a shared style in the document.
 
 Return a [SharedStyle](#shared-style) object or `undefined` if it's not found.
 
-## Get all the Symbol Masters
+## Get all the Symbol Sources
 
 ```javascript
 var symbols = document.getSymbols()
 ```
 
-A method to get all symbol masters defined in the document.
+A method to get all Symbol Sources defined in the document.
 
 ### Returns
 
-Return an array of the [SymbolMaster](#symbolmaster) objects defined in the document.
+Return an array of the [SymbolMaster](#symbol-source) objects defined in the document.
 
-## Find a Symbol Master
+## Find a Symbol Source
 
 ```javascript
-var symbolMaster = document.getSymbolMasterWithID(symbolInstance.symbolId)
+var source = document.getSymbolMasterWithID(symbolInstance.symbolId)
 ```
 
-A method to help find a symbol master in the document.
+A method to help find a Symbol Source in the document.
 
 | Parameters |  |
 | --- | --- |
-| symbolId<span class="arg-type">string - required</span> | The symbol ID of the symbol master to find |
+| symbolId<span class="arg-type">string - required</span> | The Symbol ID of the Symbol Source to find |
 
 ### Returns
 
-Return a [SymbolMaster](#symbolmaster) object or `undefined` if it's not found.
+Return a [SymbolMaster](#symbol-source) object or `undefined` if it's not found.
 
 ## Center on Layer
 
@@ -198,7 +199,7 @@ document.save()
 
 document.save('path/to/the/document.sketch')
 
-document.save('path/to/the/document.sketch', err => {
+document.save('path/to/the/document.sketch', (err) => {
   if (err) {
     // saving the document failed :(
   }
