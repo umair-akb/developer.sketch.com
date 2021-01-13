@@ -15,7 +15,6 @@ A Sketch artboard. It is an instance of both [Layer](#layer) and [Group](#group)
 | id<span class="arg-type">string</span> | The unique ID of the Artboard. |
 | name<span class="arg-type">string</span> | The name of the Artboard |
 | parent<span class="arg-type">[Page](#page)</span> | The page the Artboard is in. |
-| frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Artboard. |
 | selected<span class="arg-type">boolean</span> | If the Artboard is selected. |
 | layers<span class="arg-type">[Layer](#layer)[]</span> | The layers that this component groups together. |
 | frame<span class="arg-type">[Rectangle](#rectangle)</span> | The frame of the Artboard. This is given in coordinates that are local to the parent of the layer. |
