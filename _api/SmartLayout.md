@@ -12,7 +12,7 @@ The [SmartLayout](#smartlayout) object contains the set of possible Smart Layout
 | HorizontallyCenter | Smart Layout expanding horizontally from the center |
 | RightToLeft        | Smart Layout flowing right to left                  |
 | TopToBottom        | Smart Layout flowing from top to bottom             |
-| VerticallyCenter   | Smart Layout expanding verically from the center    |
+| VerticallyCenter   | Smart Layout expanding vertically from the center   |
 | BottomToTop        | Smart Layout flowing from bottom to top             |
 
 ## Set a Smart Layout
