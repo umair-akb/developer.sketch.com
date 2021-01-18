@@ -29,7 +29,7 @@ Register some data with a name and a key.
 
 | Parameters |  |
 | --- | --- |
-| dataType<span class="arg-type">string - required</span> | The data type. Allowed values are `public.text`, `public.image`, or `public.json`. |
+| dataType<span class="arg-type">string - required</span> | The data type. Allowed values are `public.text`, `public.image`, or `public.json` (available in Sketch 71+). |
 | dataName<span class="arg-type">string - required</span> | The data name, used as the menu item title for the data. |
 | action<span class="arg-type">string - required</span> | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
 
