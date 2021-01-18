@@ -29,7 +29,7 @@ Register some data with a name and a key.
 
 | Parameters |  |
 | --- | --- |
-| dataType<span class="arg-type">string - required</span> | The data type. Allowed values are `public.text` or `public.image`. |
+| dataType<span class="arg-type">string - required</span> | The data type. Allowed values are `public.text`, `public.image`, or `public.json`. |
 | dataName<span class="arg-type">string - required</span> | The data name, used as the menu item title for the data. |
 | action<span class="arg-type">string - required</span> | The name of the Action that will be dispatched when the user requests some data. See `supplyData`. |
 
@@ -113,7 +113,7 @@ When the plugin providing the dynamic data has finished generating the datum (co
 | Parameters |  |
 | --- | --- |
 | key<span class="arg-type">string - required</span> | Should be equal to `context.data.key` |
-| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. |
+| datum<span class="arg-type">string - required</span> | The value to provide. In case of `public.image`, the string is the path to the image. In case of `public.json`, the value is a JSON object.|
 | index<span class="arg-type">number - required</span> | The index of the item you are providing a value for. |
 
 ## DataOverride
