@@ -37,6 +37,8 @@ exclude:
   - generate.sh
   - serve.sh
   - netlify.toml
+  - node_modules/
+  - _deps/
 
 # Dynamic Content
 collections:
