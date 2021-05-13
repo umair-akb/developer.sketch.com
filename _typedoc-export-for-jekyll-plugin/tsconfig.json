@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "allowJs": true,
+    "module": "umd",
+    "target": "es2015",
+    "outDir": "./dist",
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  // "include": [
+  //   "node_modules"
+  // ],
+  "files": [
+    "src/index.ts",
+    "src/plugin.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
