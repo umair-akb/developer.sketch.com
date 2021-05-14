@@ -1,0 +1,39 @@
+{% if include.chapters.size > 0 %}
+{% capture all_main_chapters %}{% for chapter in include.chapters %}{% assign main_chapter = chapter | removeprefix: include.prefix | split: "/" | first %}{{ main_chapter }}{% if forloop.last == false %}/{% endif%}{% endfor %}{% endcapture %}
+{% assign all_chapters = all_main_chapters | split: "/" | uniq %}
+  {% if include.prefix == "" %}
+  <ol>
+  {% endif %}
+  {% for chapter in all_chapters %}
+    {% if chapter == nil or chapter == '' %}{% continue %}{% endif %}
+    <li>
+      {% if include.prefix == "" %}
+      <h5>{{ chapter }}</h5>
+      {% else %}
+      <h6>{{ chapter }}</h6>
+      {% endif %}
+      <ol>
+        {% assign chapter_prefix = include.prefix | append: chapter %}
+        {% assign prefix = chapter_prefix | append: "/" %}
+        {% assign subchapters = include.chapters | startswith: prefix | uniq %}
+        {% assign subpages = include.pages | where: "chapter", chapter_prefix | sort: "order" %}
+        
+        {% for subpage in subpages %}
+        <li>
+          <a href="{{subpage.url}}" title="{{subpage.title}}" {% if page.url==subpage.url %} class="active" {%
+            endif %}>
+            {{subpage.title}}
+          </a>
+        </li>
+        {% endfor %}
+
+        {% if subchapters.size > 0 %}
+          {% include nav-chapters.html chapters=subchapters prefix=prefix pages=include.pages %}        
+        {% endif %}
+      </ol>
+    </li>
+  {% endfor %}
+  {% if include.prefix == "" %}
+  </ol>
+  {% endif %}
+{% endif %}
