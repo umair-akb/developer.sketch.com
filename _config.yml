@@ -39,6 +39,7 @@ exclude:
   - netlify.toml
   - node_modules/
   - _deps/
+  - _typedoc-export-for-jekyll-plugin
 
 # Dynamic Content
 collections:
