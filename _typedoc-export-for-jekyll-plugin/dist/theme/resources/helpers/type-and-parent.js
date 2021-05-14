@@ -1,0 +1,59 @@
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "typedoc", "../../theme", "./escape"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.typeAndParent = void 0;
+    const typedoc_1 = require("typedoc");
+    const theme_1 = require("../../theme");
+    const escape_1 = require("./escape");
+    function typeAndParent() {
+        if (this) {
+            if ('elementType' in this) {
+                return typeAndParent.call(this.elementType) + '[]';
+            }
+            else {
+                if (this.reflection) {
+                    const md = [];
+                    const parentReflection = this.reflection.parent;
+                    if (this.reflection instanceof typedoc_1.SignatureReflection) {
+                        if (parentReflection &&
+                            parentReflection.parent &&
+                            parentReflection.parent.url) {
+                            md.push(`[${parentReflection.parent.name}](${theme_1.default.HANDLEBARS.helpers.relativeURL(parentReflection.parent.url)})`);
+                        }
+                        else if (parentReflection && parentReflection.parent) {
+                            md.push(parentReflection.parent.name);
+                        }
+                    }
+                    else {
+                        if (parentReflection && parentReflection.url) {
+                            md.push(`[${parentReflection.name}](${theme_1.default.HANDLEBARS.helpers.relativeURL(parentReflection.url)})`);
+                        }
+                        else if (parentReflection) {
+                            md.push(parentReflection.name);
+                        }
+                        if (this.reflection.url) {
+                            md.push(`[${this.reflection.name}](${theme_1.default.HANDLEBARS.helpers.relativeURL(this.reflection.url)})`);
+                        }
+                        else {
+                            md.push(this.reflection.name);
+                        }
+                    }
+                    return md.join('.');
+                }
+                else {
+                    return escape_1.escape(this.toString());
+                }
+            }
+        }
+        return 'void';
+    }
+    exports.typeAndParent = typeAndParent;
+});

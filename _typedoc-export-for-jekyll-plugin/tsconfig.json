@@ -15,11 +15,11 @@
   },
   // "include": [
   //   "node_modules"
+  // // ],
+  // "files": [
+  //   "src/index.ts",
+  //   "src/plugin.ts"
   // ],
-  "files": [
-    "src/index.ts",
-    "src/plugin.ts"
-  ],
   "exclude": [
     "node_modules"
   ]

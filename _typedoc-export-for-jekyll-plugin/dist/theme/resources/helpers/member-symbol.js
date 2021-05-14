@@ -1,0 +1,34 @@
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports", "typedoc"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.memberSymbol = void 0;
+    const typedoc_1 = require("typedoc");
+    function memberSymbol() {
+        const isStatic = this.flags && this.flags.isStatic;
+        if (this.kind === typedoc_1.ReflectionKind.ConstructorSignature) {
+            return '\\+';
+        }
+        if (this.kind === typedoc_1.ReflectionKind.CallSignature) {
+            return '▸';
+        }
+        if (this.kind === typedoc_1.ReflectionKind.TypeAlias) {
+            return 'Ƭ';
+        }
+        if (this.kind === typedoc_1.ReflectionKind.ObjectLiteral) {
+            return '▪';
+        }
+        if (this.kind === typedoc_1.ReflectionKind.Property && isStatic) {
+            return '▪';
+        }
+        return '•';
+    }
+    exports.memberSymbol = memberSymbol;
+});
