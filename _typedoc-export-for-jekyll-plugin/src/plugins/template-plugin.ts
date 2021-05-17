@@ -1,9 +1,14 @@
+import * as path from 'path';
+
+import { BindOption, Renderer } from 'typedoc';
 import { Component, RendererComponent } from 'typedoc/dist/lib/output/components';
+import { Converter } from 'typedoc/dist/lib/converter';
 import { ReflectionKind } from 'typedoc/dist/lib/models';
 import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { LogLevel } from 'typedoc/dist/lib/utils';
-import { writeFileSync } from 'fs'
-import { inspect } from 'util'
+import { writeFileSync } from 'fs';
+import { inspect } from 'util';
+import { urlFriendlyName } from '../util/urls';
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -18,6 +23,8 @@ export class TemplatePlugin extends RendererComponent {
     this.listenTo(this.owner, PageEvent.BEGIN, this.onRendererBeginPage, 1500);
     this.listenTo(this.owner, PageEvent.END, this.onRendererEndPage, 1000);
   }
+
+
   /**
    * Triggered after a document has been rendered, just before it is written to disc.
    *
@@ -65,7 +72,7 @@ excerpt: Sketch Assistants type reference.
       "reference",
       this.getKindChapter(model.parent),
       this.getKindChapter(model),
-      this.nameToUrl(model.name)
+      urlFriendlyName(model.name)
     ].filter((v) => !!v).join("/");
   }
 
@@ -80,10 +87,5 @@ excerpt: Sketch Assistants type reference.
   private titleCaseWord(word: string) {
     if (!word) return word;
     return word[0].toUpperCase() + word.substr(1);
-  }
-
-  private nameToUrl(word: string) {
-    if (!word) return word;
-    return word.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
   }
 }

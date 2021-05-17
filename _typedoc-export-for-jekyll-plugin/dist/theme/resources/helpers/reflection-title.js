@@ -1,35 +1,25 @@
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.reflectionTitle = void 0;
+const theme_1 = require("../../theme");
+const escape_1 = require("./escape");
+function reflectionTitle(shouldEscape = true) {
+    const title = [''];
+    if (this.model && this.model.kindString && this.url !== this.project.url) {
+        title.push(`${this.model.kindString}: `);
     }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../../theme", "./escape"], factory);
+    if (this.url === this.project.url) {
+        title.push(theme_1.default.HANDLEBARS.helpers.indexTitle() || this.project.name);
     }
-})(function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.reflectionTitle = void 0;
-    const theme_1 = require("../../theme");
-    const escape_1 = require("./escape");
-    function reflectionTitle(shouldEscape = true) {
-        const title = [''];
-        if (this.model && this.model.kindString && this.url !== this.project.url) {
-            title.push(`${this.model.kindString}: `);
+    else {
+        title.push(shouldEscape ? escape_1.escape(this.model.name) : this.model.name);
+        if (this.model.typeParameters) {
+            const typeParameters = this.model.typeParameters
+                .map((typeParameter) => typeParameter.name)
+                .join(', ');
+            title.push(`<${typeParameters}${shouldEscape ? '\\>' : '>'}`);
         }
-        if (this.url === this.project.url) {
-            title.push(theme_1.default.HANDLEBARS.helpers.indexTitle() || this.project.name);
-        }
-        else {
-            title.push(shouldEscape ? escape_1.escape(this.model.name) : this.model.name);
-            if (this.model.typeParameters) {
-                const typeParameters = this.model.typeParameters
-                    .map((typeParameter) => typeParameter.name)
-                    .join(', ');
-                title.push(`<${typeParameters}${shouldEscape ? '\\>' : '>'}`);
-            }
-        }
-        return title.join('');
     }
-    exports.reflectionTitle = reflectionTitle;
-});
+    return title.join('');
+}
+exports.reflectionTitle = reflectionTitle;

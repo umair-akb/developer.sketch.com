@@ -14,6 +14,9 @@
   "engines": {
     "node": ">= 10.8.0"
   },
+  "devDependencies": {
+    "copyfiles": "^2.4.1"
+  },
   "peerDependencies": {
     "typedoc": ">=0.20.0"
   },
@@ -21,7 +24,7 @@
     "dist/"
   ],
   "scripts": {
-    "build": "rm -rf dist && tsc",
+    "build": "rm -rf dist && tsc && copyfiles --up 1 ./src/**/*.hbs ./dist/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mihai Potra <mihai@sketch.com>",
