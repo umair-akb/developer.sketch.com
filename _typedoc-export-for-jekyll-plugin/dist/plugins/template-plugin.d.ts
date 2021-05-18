@@ -15,10 +15,9 @@ export declare class TemplatePlugin extends RendererComponent {
      *
      * @param page  An event object describing the current render operation.
      */
-    private onRendererEndPage;
-    private onRendererBeginPage;
+    private onRendererPageEnd;
+    private onRendererPageBegin;
     private getKindChapter;
-    private getPermalink;
     private getChapter;
     private titleCaseWord;
 }

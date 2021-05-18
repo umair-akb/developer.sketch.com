@@ -13,7 +13,6 @@ const converter_1 = require("typedoc/dist/lib/converter");
 const components_1 = require("typedoc/dist/lib/converter/components");
 class ConverterPlugin extends components_1.ConverterComponent {
     initialize() {
-        // this.stopListening(this.owner, Converter.EVENT_BEGIN,)
         this.listenTo(this.owner, converter_1.Converter.EVENT_BEGIN, this.onConverterBegin, 1000);
     }
     /**

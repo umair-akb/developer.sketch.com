@@ -1,14 +1,7 @@
-import * as path from 'path';
-
-import { BindOption, Renderer } from 'typedoc';
-import { Component, RendererComponent } from 'typedoc/dist/lib/output/components';
-import { Converter } from 'typedoc/dist/lib/converter';
+import { RendererComponent } from 'typedoc/dist/lib/output/components';
 import { ReflectionKind } from 'typedoc/dist/lib/models';
 import { PageEvent } from 'typedoc/dist/lib/output/events';
-import { LogLevel } from 'typedoc/dist/lib/utils';
-import { writeFileSync } from 'fs';
-import { inspect } from 'util';
-import { urlFriendlyName } from '../util/urls';
+import { stripMdExt } from '../util/urls';
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -20,8 +13,8 @@ export class TemplatePlugin extends RendererComponent {
    * Create a new TemplatePlugin instance.
    */
   initialize() {
-    this.listenTo(this.owner, PageEvent.BEGIN, this.onRendererBeginPage, 1500);
-    this.listenTo(this.owner, PageEvent.END, this.onRendererEndPage, 1000);
+    this.listenTo(this.owner, PageEvent.BEGIN, this.onRendererPageBegin);
+    this.listenTo(this.owner, PageEvent.END, this.onRendererPageEnd, 1000);
   }
 
 
@@ -30,13 +23,14 @@ export class TemplatePlugin extends RendererComponent {
    *
    * @param page  An event object describing the current render operation.
    */
-  private onRendererEndPage(event) {
-    const title = event.model.name;
+  private onRendererPageEnd(pageEvent) {
+    const title = pageEvent.model.name;
     // TODO: Build header dynamically by case
-    const chapter = this.getChapter(event.model);
-    const permalink = this.getPermalink(event.model);
+    const chapter = this.getChapter(pageEvent.model);
+    // const permalink = this.getPermalink(pageEvent.model);
+    const permalink = pageEvent.permalink;
 
-    event.contents = `---
+    pageEvent.contents = `---
 title: ${title}
 section: assistants
 permalink: /assistants/${permalink}
@@ -44,10 +38,15 @@ chapter: ${chapter}
 excerpt: Sketch Assistants type reference.
 ---
 
-` + event.contents
+` + pageEvent.contents
   }
 
-  private onRendererBeginPage(event) {
+  private onRendererPageBegin(pageEvent) {
+    // This is where we should compute the permalink
+    // for the Jekyll header.
+
+    pageEvent.permalink = stripMdExt(pageEvent.url);
+    return pageEvent;
   }
 
   private getKindChapter(reflection) {
@@ -65,15 +64,6 @@ excerpt: Sketch Assistants type reference.
     } else {
       return "";
     }
-  }
-
-  private getPermalink(model) {
-    return [
-      "reference",
-      this.getKindChapter(model.parent),
-      this.getKindChapter(model),
-      urlFriendlyName(model.name)
-    ].filter((v) => !!v).join("/");
   }
 
   private getChapter(model) {

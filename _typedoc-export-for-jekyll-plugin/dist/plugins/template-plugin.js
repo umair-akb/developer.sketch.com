@@ -16,20 +16,21 @@ class TemplatePlugin extends components_1.RendererComponent {
      * Create a new TemplatePlugin instance.
      */
     initialize() {
-        this.listenTo(this.owner, events_1.PageEvent.BEGIN, this.onRendererBeginPage, 1500);
-        this.listenTo(this.owner, events_1.PageEvent.END, this.onRendererEndPage, 1000);
+        this.listenTo(this.owner, events_1.PageEvent.BEGIN, this.onRendererPageBegin);
+        this.listenTo(this.owner, events_1.PageEvent.END, this.onRendererPageEnd, 1000);
     }
     /**
      * Triggered after a document has been rendered, just before it is written to disc.
      *
      * @param page  An event object describing the current render operation.
      */
-    onRendererEndPage(event) {
-        const title = event.model.name;
+    onRendererPageEnd(pageEvent) {
+        const title = pageEvent.model.name;
         // TODO: Build header dynamically by case
-        const chapter = this.getChapter(event.model);
-        const permalink = this.getPermalink(event.model);
-        event.contents = `---
+        const chapter = this.getChapter(pageEvent.model);
+        // const permalink = this.getPermalink(pageEvent.model);
+        const permalink = pageEvent.permalink;
+        pageEvent.contents = `---
 title: ${title}
 section: assistants
 permalink: /assistants/${permalink}
@@ -37,9 +38,13 @@ chapter: ${chapter}
 excerpt: Sketch Assistants type reference.
 ---
 
-` + event.contents;
+` + pageEvent.contents;
     }
-    onRendererBeginPage(event) {
+    onRendererPageBegin(pageEvent) {
+        // This is where we should compute the permalink
+        // for the Jekyll header.
+        pageEvent.permalink = urls_1.stripMdExt(pageEvent.url);
+        return pageEvent;
     }
     getKindChapter(reflection) {
         if (reflection && reflection.kind) {
@@ -57,14 +62,6 @@ excerpt: Sketch Assistants type reference.
         else {
             return "";
         }
-    }
-    getPermalink(model) {
-        return [
-            "reference",
-            this.getKindChapter(model.parent),
-            this.getKindChapter(model),
-            urls_1.urlFriendlyName(model.name)
-        ].filter((v) => !!v).join("/");
     }
     getChapter(model) {
         return [

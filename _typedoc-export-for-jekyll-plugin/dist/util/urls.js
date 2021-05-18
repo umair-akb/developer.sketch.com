@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.urlFriendlyName = void 0;
+exports.stripMdExt = exports.urlFriendlyName = void 0;
 function urlFriendlyName(word) {
     if (!word)
         return word;
@@ -9,3 +9,7 @@ function urlFriendlyName(word) {
     return word;
 }
 exports.urlFriendlyName = urlFriendlyName;
+function stripMdExt(path) {
+    return path.replace(/(.*)(\.md)/, "$1");
+}
+exports.stripMdExt = stripMdExt;
