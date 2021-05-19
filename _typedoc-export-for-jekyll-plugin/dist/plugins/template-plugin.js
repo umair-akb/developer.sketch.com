@@ -5,6 +5,7 @@ const components_1 = require("typedoc/dist/lib/output/components");
 const models_1 = require("typedoc/dist/lib/models");
 const events_1 = require("typedoc/dist/lib/output/events");
 const urls_1 = require("../util/urls");
+const strings_1 = require("../util/strings");
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -27,13 +28,13 @@ class TemplatePlugin extends components_1.RendererComponent {
     onRendererPageEnd(pageEvent) {
         const title = pageEvent.model.name;
         // TODO: Build header dynamically by case
-        const chapter = this.getChapter(pageEvent.model);
+        const chapter = this.getChapter(pageEvent.model, 'Reference');
         // const permalink = this.getPermalink(pageEvent.model);
         const permalink = pageEvent.permalink;
         pageEvent.contents = `---
 title: ${title}
 section: assistants
-permalink: /assistants/${permalink}
+permalink: /assistants/reference/${permalink}
 chapter: ${chapter}
 excerpt: Sketch Assistants type reference.
 ---
@@ -43,37 +44,71 @@ excerpt: Sketch Assistants type reference.
     onRendererPageBegin(pageEvent) {
         // This is where we should compute the permalink
         // for the Jekyll header.
-        pageEvent.permalink = urls_1.stripMdExt(pageEvent.url);
+        pageEvent.permalink = this.getPermalink(pageEvent.url, pageEvent.model);
         return pageEvent;
     }
+    getPermalink(url, reflection) {
+        const project = this.getProject(reflection);
+        const projectSlug = (project ? project.getAlias() + '/' : '');
+        return projectSlug + urls_1.stripMdExt(url);
+    }
     getKindChapter(reflection) {
-        if (reflection && reflection.kind) {
-            switch (reflection.kind) {
-                case models_1.ReflectionKind.Project:
-                    return reflection.name;
-                case models_1.ReflectionKind.Enum:
-                    return "enums";
-                case models_1.ReflectionKind.Module:
-                    return "modules";
-                default:
-                    return "";
-            }
+        if (!reflection) {
+            return null;
+        }
+        if (reflection.isProject()) {
+            return strings_1.toTitleCase(reflection.name);
+        }
+        switch (reflection.kind) {
+            case models_1.ReflectionKind.Enum:
+                return 'Enums';
+            case models_1.ReflectionKind.Module:
+            case models_1.ReflectionKind.Namespace:
+                return 'Modules';
+            default:
+                return null;
+        }
+    }
+    getProject(model) {
+        if (!model) {
+            return null;
+        }
+        if (model.isProject()) {
+            return model;
         }
         else {
-            return "";
+            return this.getProject(model.parent);
         }
     }
-    getChapter(model) {
-        return [
-            "Reference",
-            this.titleCaseWord(this.getKindChapter(model.parent)),
-            this.titleCaseWord(this.getKindChapter(model))
-        ].filter((v) => !!v).join("/");
+    getChaptersArray(reflection) {
+        if (reflection) {
+            let chapters = [];
+            if (!reflection.isProject()) {
+                const chapter = this.getKindChapter(reflection);
+                chapters = this.getChaptersArray(reflection.parent);
+                if (chapter) {
+                    chapters.push(chapter);
+                }
+                chapters = chapters.filter((v) => !!v);
+            }
+            return chapters;
+        }
+        return [];
     }
-    titleCaseWord(word) {
-        if (!word)
-            return word;
-        return word[0].toUpperCase() + word.substr(1);
+    getChapter(reflection, rootChapter = '') {
+        if (reflection) {
+            let rootChapters = [rootChapter];
+            const project = (reflection.isProject() ? reflection : this.getProject(reflection));
+            if (project) {
+                const projectChapter = this.getKindChapter(project);
+                if (projectChapter) {
+                    rootChapters.push(projectChapter);
+                }
+            }
+            let chapters = rootChapters.concat(this.getChaptersArray(reflection));
+            return chapters.join('/');
+        }
+        return rootChapter;
     }
 }
 exports.TemplatePlugin = TemplatePlugin;
