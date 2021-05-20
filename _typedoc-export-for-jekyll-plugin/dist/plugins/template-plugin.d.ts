@@ -17,6 +17,7 @@ export declare class TemplatePlugin extends RendererComponent {
      */
     private onRendererPageEnd;
     private onRendererPageBegin;
+    private getExcerpt;
     private getPermalink;
     private getKindChapter;
     private getProject;

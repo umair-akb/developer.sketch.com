@@ -26,17 +26,16 @@ export class TemplatePlugin extends RendererComponent {
    */
   private onRendererPageEnd(pageEvent) {
     const title = pageEvent.model.name;
-    // TODO: Build header dynamically by case
     const chapter = this.getChapter(pageEvent.model, 'Reference');
-    // const permalink = this.getPermalink(pageEvent.model);
     const permalink = pageEvent.permalink;
+    const excerpt = this.getExcerpt(pageEvent.model);
 
     pageEvent.contents = `---
 title: ${title}
 section: assistants
 permalink: /assistants/reference/${permalink}
 chapter: ${chapter}
-excerpt: Sketch Assistants type reference.
+excerpt: ${excerpt}
 ---
 
 ` + pageEvent.contents
@@ -48,6 +47,14 @@ excerpt: Sketch Assistants type reference.
 
     pageEvent.permalink = this.getPermalink(pageEvent.url, pageEvent.model);
     return pageEvent;
+  }
+
+  private getExcerpt(reflection) {
+    if (reflection.comment) {
+      return reflection.comment.shortText;
+    } else {
+      return reflection.name;
+    }
   }
 
   private getPermalink(url, reflection) {
@@ -114,7 +121,7 @@ excerpt: Sketch Assistants type reference.
   private getChapter(reflection, rootChapter = '') {
     if (reflection) {
       let rootChapters: string[] = [rootChapter];
-      const project = (reflection.isProject() ? reflection : this.getProject(reflection));
+      const project = (reflection.isProject() ? null : this.getProject(reflection));
       if (project) {
         const projectChapter = this.getKindChapter(project);
         if (projectChapter) {
