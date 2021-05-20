@@ -44,7 +44,7 @@ layout: base
             {% else %}
 
             {% assign pages = site.pages | where: "section", page.section %}
-            {% include nav-chapters.html chapters=all_chapters prefix='' pages=pages %}
+            {% include nav-chapters.html chapters=all_chapters prefix='' group='' section=page.section pages=pages %}
 
 
             {% endif %}
