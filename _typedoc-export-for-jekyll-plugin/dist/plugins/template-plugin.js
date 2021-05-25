@@ -17,7 +17,7 @@ class TemplatePlugin extends components_1.RendererComponent {
      * Create a new TemplatePlugin instance.
      */
     initialize() {
-        this.listenTo(this.owner, events_1.PageEvent.BEGIN, this.onRendererPageBegin);
+        this.listenTo(this.owner, events_1.PageEvent.BEGIN, this.onRendererPageBegin, 1);
         this.listenTo(this.owner, events_1.PageEvent.END, this.onRendererPageEnd, 1000);
     }
     /**
@@ -30,12 +30,14 @@ class TemplatePlugin extends components_1.RendererComponent {
         const chapter = this.getChapter(pageEvent.model, 'Reference');
         const permalink = pageEvent.permalink;
         const excerpt = this.getExcerpt(pageEvent.model);
+        const definitions = pageEvent.definitions;
         pageEvent.contents = `---
 title: ${title}
 section: assistants
 permalink: /assistants/reference/${permalink}
 chapter: ${chapter}
 excerpt: ${excerpt}
+definitions: ${definitions}
 ---
 
 ` + pageEvent.contents;
@@ -44,6 +46,7 @@ excerpt: ${excerpt}
         // This is where we should compute the permalink
         // for the Jekyll header.
         pageEvent.permalink = this.getPermalink(pageEvent.url, pageEvent.model);
+        pageEvent.definitions = this.getProjectLinks(pageEvent.model);
         return pageEvent;
     }
     getExcerpt(reflection) {
@@ -116,6 +119,18 @@ excerpt: ${excerpt}
             return chapters.join('/');
         }
         return rootChapter;
+    }
+    getProjectLinks(project) {
+        const groups = project.groups || [];
+        return groups
+            .map(group => `${group.title}||${this.getGroupLinks(group)}`)
+            .join('|||');
+    }
+    getGroupLinks(group) {
+        return group
+            .children
+            .map(child => `${child.name};${child.url}`)
+            .join('|');
     }
 }
 exports.TemplatePlugin = TemplatePlugin;

@@ -3,7 +3,7 @@
 {{#ifCond ../name '===' name}}
 
 Re-exports: [{{escape name}}]({{relativeURL url}})
-
+{{> member}}
 {{else if flags.isExported}}
 
 Renames and re-exports: [{{escape name}}]({{relativeURL url}})

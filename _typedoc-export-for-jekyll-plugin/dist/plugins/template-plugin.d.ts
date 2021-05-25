@@ -23,4 +23,6 @@ export declare class TemplatePlugin extends RendererComponent {
     private getProject;
     private getChaptersArray;
     private getChapter;
+    private getProjectLinks;
+    private getGroupLinks;
 }

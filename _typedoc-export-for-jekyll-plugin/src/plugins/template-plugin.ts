@@ -1,5 +1,9 @@
 import { RendererComponent } from 'typedoc/dist/lib/output/components';
-import { ReflectionKind } from 'typedoc/dist/lib/models';
+import {
+  ProjectReflection,
+  ReflectionGroup,
+  ReflectionKind
+} from 'typedoc/dist/lib/models';
 import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { stripMdExt } from '../util/urls';
 import { toTitleCase } from '../util/strings';
@@ -14,7 +18,7 @@ export class TemplatePlugin extends RendererComponent {
    * Create a new TemplatePlugin instance.
    */
   initialize() {
-    this.listenTo(this.owner, PageEvent.BEGIN, this.onRendererPageBegin);
+    this.listenTo(this.owner, PageEvent.BEGIN, this.onRendererPageBegin, 1);
     this.listenTo(this.owner, PageEvent.END, this.onRendererPageEnd, 1000);
   }
 
@@ -29,6 +33,7 @@ export class TemplatePlugin extends RendererComponent {
     const chapter = this.getChapter(pageEvent.model, 'Reference');
     const permalink = pageEvent.permalink;
     const excerpt = this.getExcerpt(pageEvent.model);
+    const definitions = pageEvent.definitions;
 
     pageEvent.contents = `---
 title: ${title}
@@ -36,6 +41,7 @@ section: assistants
 permalink: /assistants/reference/${permalink}
 chapter: ${chapter}
 excerpt: ${excerpt}
+definitions: ${definitions}
 ---
 
 ` + pageEvent.contents
@@ -46,6 +52,7 @@ excerpt: ${excerpt}
     // for the Jekyll header.
 
     pageEvent.permalink = this.getPermalink(pageEvent.url, pageEvent.model);
+    pageEvent.definitions = this.getProjectLinks(pageEvent.model);
     return pageEvent;
   }
 
@@ -135,5 +142,20 @@ excerpt: ${excerpt}
     }
 
     return rootChapter;
+  }
+
+  private getProjectLinks(project: ProjectReflection) {
+    const groups = project.groups || [];
+
+    return groups
+      .map(group => `${group.title}||${this.getGroupLinks(group)}`)
+      .join('|||')
+  }
+
+  private getGroupLinks(group: ReflectionGroup) {
+    return group
+      .children
+      .map(child => `${child.name};${child.url}`)
+      .join('|');
   }
 }

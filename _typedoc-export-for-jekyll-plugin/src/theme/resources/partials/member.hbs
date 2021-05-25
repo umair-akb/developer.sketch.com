@@ -8,38 +8,4 @@
 
 {{/unless}}
 
-{{#if signatures}}
-
-{{#each signatures}}
-
-{{> member.signature showSources=true }}
-
-{{/each}}
-
-{{else}}
-
-{{#if hasGetterOrSetter}}
-
-{{> member.getterSetter}}
-
-{{else}}
-
-{{#if isReference}}
-
-{{> member.reference}}
-
-{{else}}
-
-{{> member.declaration}}
-
-{{/if}}
-
-{{/if}}
-
-{{/if}}
-
-{{#unless @last}}
-{{#unless hasOwnDocument}}
-___
-{{/unless}}
-{{/unless}}
+{{> member.main }}

@@ -23,6 +23,28 @@
         <h6>{{chapter_header}}</h6>
       {% endif %}
       <ol>
+        {% assign inner_groups = chapter_page.definitions | split: "|||" %}
+        {% for inner_group in inner_groups %}
+          {% assign group_def = inner_group | split: "||" %}
+          {% assign group_name = group_def | first %}
+
+          <li>
+            <h5>{{group_name}}</h5>
+            <ol>
+
+            {% assign link_defs = group_def | last | split: "|" %}
+            {% for link_def_item in link_defs %}
+              {% assign link_def = link_def_item | split: ";" %}
+              {% assign link_name = link_def | first %}
+              {% assign link_url_part = link_def | last %}
+              {% assign link_url = chapter_page.url | append: "/" | append: link_url_part %}
+              <li>
+                <a href="{{link_url}}" title="{{link_name}}" {% if page.url==link_url %} class="active" {% endif %}>{{link_name}}</a>
+              </li>
+            {% endfor %}
+            </ol>
+          </li>
+        {% endfor %}
         
         {% assign subchapters = include.chapters | startswith: prefix | uniq %}
         {% assign subpages = include.pages | where: "chapter", chapter_prefix | sort: "order" %}

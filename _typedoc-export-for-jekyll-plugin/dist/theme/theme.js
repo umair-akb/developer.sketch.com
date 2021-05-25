@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedoc_1 = require("typedoc");
 const theme_1 = require("typedoc-plugin-markdown/dist/theme");
+const models_1 = require("typedoc/dist/lib/models");
 const urls_1 = require("../util/urls");
 class SketchCustomTheme extends theme_1.default {
     constructor(renderer, basePath) {
@@ -26,6 +27,27 @@ class SketchCustomTheme extends theme_1.default {
                     : mdOptions.getRelativeUrl(url)
                 : url;
             return urls_1.stripMdExt(relative_url);
+        });
+    }
+    /**
+     * Similar to DefaultTheme.applyAnchorUrl method with added but the anchors are computed from the reflection structure
+     * Generate an anchor url for the given reflection and all of its children.
+     *
+     * @param reflection  The reflection an anchor url should be created for.
+     * @param container   The nearest reflection having an own document.
+     */
+    applyAnchorUrl(reflection, container) {
+        if (!reflection.url || !theme_1.default.URL_PREFIX.test(reflection.url)) {
+            const reflectionId = reflection.name.toLowerCase();
+            const anchor = this.toAnchorRef(reflectionId);
+            reflection.url = '#' + anchor;
+            reflection.anchor = anchor;
+            reflection.hasOwnDocument = false;
+        }
+        reflection.traverse((child) => {
+            if (child instanceof models_1.DeclarationReflection) {
+                this.applyAnchorUrl(child, container);
+            }
         });
     }
 }

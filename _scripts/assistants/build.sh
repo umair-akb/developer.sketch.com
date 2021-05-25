@@ -129,7 +129,7 @@ fi
 
 ABS_LOCAL_ASSISTANTS_OUT=$([[ "$LOCAL_ASSISTANTS_OUT_PATH" = /* ]] && echo "$LOCAL_ASSISTANTS_OUT_PATH" || echo "$PWD/$LOCAL_ASSISTANTS_OUT_PATH")
 
-TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --filenameSeparator \/ --readme none --excludeExternals --exclude **/__tests__/*"
+TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --filenameSeparator \/ --readme none --plugin typedoc-export-for-jekyll-plugin --excludeExternals --exclude **/__tests__/*"
 
 CMD_TYPEDOC_PACKAGE_TYPES="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Types --out $ABS_LOCAL_ASSISTANTS_OUT/types $ABS_ASSISTANTS_PKG_TYPES"
 CMD_TYPEDOC_PACKAGE_UTILS="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Utils --out $ABS_LOCAL_ASSISTANTS_OUT/utils $ABS_ASSISTANTS_PKG_UTILS"
