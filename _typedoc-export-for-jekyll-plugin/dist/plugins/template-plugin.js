@@ -6,6 +6,7 @@ const models_1 = require("typedoc/dist/lib/models");
 const events_1 = require("typedoc/dist/lib/output/events");
 const urls_1 = require("../util/urls");
 const strings_1 = require("../util/strings");
+const util_1 = require("util");
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -122,14 +123,19 @@ definitions: ${definitions}
     }
     getProjectLinks(project) {
         const groups = project.groups || [];
+        this.application.logger.log(`Project categories: ${util_1.inspect(project.categories)}`);
         return groups
-            .map(group => `${group.title}||${this.getGroupLinks(group)}`)
+            .map(group => this.getGroupLinks(group))
             .join('|||');
     }
     getGroupLinks(group) {
+        // this.application.logger.log(`Group: ${ inspect(group) }`);
+        return [group.title, this.getGroupChildren(group)].join('||');
+    }
+    getGroupChildren(group) {
         return group
             .children
-            .map(child => `${child.name};${child.url}`)
+            .map(child => [child.name, child.url].join(';'))
             .join('|');
     }
 }

@@ -23,45 +23,19 @@
         <h6>{{chapter_header}}</h6>
       {% endif %}
       <ol>
-        {% assign inner_groups = chapter_page.definitions | split: "|||" %}
-        {% for inner_group in inner_groups %}
-          {% assign group_def = inner_group | split: "||" %}
-          {% assign group_name = group_def | first %}
-
-          <li>
-            <h5>{{group_name}}</h5>
-            <ol>
-
-            {% assign link_defs = group_def | last | split: "|" %}
-            {% for link_def_item in link_defs %}
-              {% assign link_def = link_def_item | split: ";" %}
-              {% assign link_name = link_def | first %}
-              {% assign link_url_part = link_def | last %}
-              {% assign link_url = chapter_page.url | append: "/" | append: link_url_part %}
-              <li>
-                <a href="{{link_url}}" title="{{link_name}}" {% if page.url==link_url %} class="active" {% endif %}>{{link_name}}</a>
-              </li>
-            {% endfor %}
-            </ol>
-          </li>
-        {% endfor %}
+        {% if chapter_page %}
+          {% include nav-subpage-toc.html page=chapter_page %}
+        {% endif %}
         
         {% assign subchapters = include.chapters | startswith: prefix | uniq %}
         {% assign subpages = include.pages | where: "chapter", chapter_prefix | sort: "order" %}
         
         {% for subpage in subpages %}
-          {% assign subpage_prefix = subpage.chapter | append: "/" | append: subpage.title %}
-          {% assign subpage_pages = include.pages | map: "chapter" | startswith: subpage_prefix %}
-          {% unless subpage_pages.size > 0 %}
-            <li>
-              <a href="{{subpage.url}}" title="{{subpage.title}}" {% if page.url==subpage.url %} class="active" {% endif %}>{{subpage.title}}</a>
-            </li>
-          {% endunless %}
+          <li>
+            <a href="{{subpage.url}}" title="{{subpage.title}}" {% if page.url==subpage.url %} class="active" {% endif %}>{{subpage.title}}</a>
+          </li>
+          {% include nav-subpage-toc.html page=subpage %}
         {% endfor %}
-
-        {% if subchapters.size > 0 %}
-          {% include nav-chapters.html chapters=subchapters prefix=prefix group=chapter_prefix pages=include.pages %}        
-        {% endif %}
       </ol>
     </li>
   {% endfor %}

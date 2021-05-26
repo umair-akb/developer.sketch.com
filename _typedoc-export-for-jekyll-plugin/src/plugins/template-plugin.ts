@@ -7,6 +7,8 @@ import {
 import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { stripMdExt } from '../util/urls';
 import { toTitleCase } from '../util/strings';
+
+import { inspect } from 'util';
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -147,15 +149,22 @@ definitions: ${definitions}
   private getProjectLinks(project: ProjectReflection) {
     const groups = project.groups || [];
 
+    this.application.logger.log(`Project categories: ${inspect(project.categories)}`);
+
     return groups
-      .map(group => `${group.title}||${this.getGroupLinks(group)}`)
+      .map(group => this.getGroupLinks(group))
       .join('|||')
   }
 
-  private getGroupLinks(group: ReflectionGroup) {
+  private getGroupLinks(group) {
+    // this.application.logger.log(`Group: ${ inspect(group) }`);
+    return [group.title, this.getGroupChildren(group)].join('||');
+  }
+
+  private getGroupChildren(group: ReflectionGroup) {
     return group
       .children
-      .map(child => `${child.name};${child.url}`)
+      .map(child => [child.name, child.url].join(';'))
       .join('|');
   }
 }

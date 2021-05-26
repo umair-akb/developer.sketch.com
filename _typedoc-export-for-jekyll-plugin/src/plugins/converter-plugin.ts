@@ -11,6 +11,8 @@ import {
   ReferenceReflection
 } from 'typedoc/dist/lib/models';
 
+// import { inspect } from 'util';
+
 @Component({ name: 'jekyll-sketch-converter' })
 export class ConverterPlugin extends ConverterComponent {
   @BindOption('theme')
@@ -50,6 +52,9 @@ export class ConverterPlugin extends ConverterComponent {
     project.children = [];
     for (let i = 0; i < children.length; i++) {
       let child = children[i];
+      // if (child.name == 'run/profile') {
+      //   this.application.logger.log(inspect(child));
+      // }
       this.importReflections(child, project);
     }
 
@@ -85,9 +90,6 @@ export class ConverterPlugin extends ConverterComponent {
   }
 
   pruneReferences(project: ProjectReflection) {
-    this.application.logger.log(`Pruning ${project.name}`);
-
-
     const nonReferenceReflections = project
       .getChildrenByKind(ReflectionKind.All ^ ReflectionKind.Reference);
 

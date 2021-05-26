@@ -12,6 +12,7 @@ const typedoc_1 = require("typedoc");
 const converter_1 = require("typedoc/dist/lib/converter");
 const components_1 = require("typedoc/dist/lib/converter/components");
 const models_1 = require("typedoc/dist/lib/models");
+const util_1 = require("util");
 let ConverterPlugin = class ConverterPlugin extends components_1.ConverterComponent {
     initialize() {
         // This has to be -1 priority to run first and set the `getDefaultTheme` static function.
@@ -42,6 +43,9 @@ let ConverterPlugin = class ConverterPlugin extends components_1.ConverterCompon
         project.children = [];
         for (let i = 0; i < children.length; i++) {
             let child = children[i];
+            if (child.name == 'run/profile') {
+                this.application.logger.log(util_1.inspect(child));
+            }
             this.importReflections(child, project);
         }
         // At the end of importing all children,
@@ -72,7 +76,6 @@ let ConverterPlugin = class ConverterPlugin extends components_1.ConverterCompon
         (_a = target.children) === null || _a === void 0 ? void 0 : _a.push(source);
     }
     pruneReferences(project) {
-        this.application.logger.log(`Pruning ${project.name}`);
         const nonReferenceReflections = project
             .getChildrenByKind(models_1.ReflectionKind.All ^ models_1.ReflectionKind.Reference);
         project
