@@ -7,5 +7,6 @@ export function urlFriendlyName(word: string) {
 }
 
 export function stripMdExt(path: string) {
+  if (!path) return path;
   return path.replace(/(.*)(\.md)/, "$1");
 }

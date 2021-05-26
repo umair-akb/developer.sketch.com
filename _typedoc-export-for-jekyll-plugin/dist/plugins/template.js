@@ -6,7 +6,6 @@ const models_1 = require("typedoc/dist/lib/models");
 const events_1 = require("typedoc/dist/lib/output/events");
 const urls_1 = require("../util/urls");
 const strings_1 = require("../util/strings");
-// import { inspect } from 'util';
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -128,7 +127,6 @@ definitions: ${definitions}
             .join('|||');
     }
     getGroupLinks(group) {
-        // this.application.logger.log(`Group: ${ inspect(group) }`);
         return [group.title, this.getGroupChildren(group)].join('||');
     }
     getGroupChildren(group) {

@@ -7,7 +7,6 @@ import {
 import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { stripMdExt } from '../util/urls';
 import { toTitleCase } from '../util/strings';
-// import { inspect } from 'util';
 
 /**
  * A plugin that wraps the generated output with a layout template.
@@ -155,7 +154,6 @@ definitions: ${definitions}
   }
 
   private getGroupLinks(group) {
-    // this.application.logger.log(`Group: ${ inspect(group) }`);
     return [group.title, this.getGroupChildren(group)].join('||');
   }
 

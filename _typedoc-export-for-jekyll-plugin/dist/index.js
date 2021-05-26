@@ -59,7 +59,7 @@ module.exports = (PluginHost) => {
     });
     if (app.converter.hasComponent('group')) {
         app.converter.removeComponent('group');
-        app.converter.addComponent('jekyll-sketch-group', new group_1.SketchGroupPlugin(app.converter));
+        app.converter.addComponent('jekyll-sketch-group', new group_1.GroupPlugin(app.converter));
     }
     app.converter.addComponent('jekyll-sketch-converter', new converter_1.ConverterPlugin(app.converter));
     app.renderer.addComponent('jekyll-sketch-template', new template_1.TemplatePlugin(app.renderer));
