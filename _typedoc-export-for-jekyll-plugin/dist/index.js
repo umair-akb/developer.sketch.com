@@ -1,7 +1,8 @@
 "use strict";
 const declaration_1 = require("typedoc/dist/lib/utils/options/declaration");
-const converter_plugin_1 = require("./plugins/converter-plugin");
-const template_plugin_1 = require("./plugins/template-plugin");
+const converter_1 = require("./plugins/converter");
+const template_1 = require("./plugins/template");
+const group_1 = require("./plugins/group");
 module.exports = (PluginHost) => {
     const app = PluginHost.owner;
     app.options.addDeclaration({
@@ -56,6 +57,10 @@ module.exports = (PluginHost) => {
         name: 'indexTitle',
         type: declaration_1.ParameterType.String,
     });
-    app.converter.addComponent('jekyll-sketch-converter', new converter_plugin_1.ConverterPlugin(app.converter));
-    app.renderer.addComponent('jekyll-sketch-template', new template_plugin_1.TemplatePlugin(app.renderer));
+    if (app.converter.hasComponent('group')) {
+        app.converter.removeComponent('group');
+        app.converter.addComponent('jekyll-sketch-group', new group_1.SketchGroupPlugin(app.converter));
+    }
+    app.converter.addComponent('jekyll-sketch-converter', new converter_1.ConverterPlugin(app.converter));
+    app.renderer.addComponent('jekyll-sketch-template', new template_1.TemplatePlugin(app.renderer));
 };

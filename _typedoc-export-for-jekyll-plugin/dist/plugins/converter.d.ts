@@ -7,7 +7,7 @@ export declare class ConverterPlugin extends ConverterComponent {
     /**
      * Overide default assets
      */
-    onConverterBegin(context: any): void;
+    onConverterBegin(context: Context): void;
     /**
      * Fetches all child reflections and merges them into the project,
      * so that the modular hierarchy based on Module and Namespace reflections

@@ -31,7 +31,7 @@ export class ConverterPlugin extends ConverterComponent {
   /**
    * Overide default assets
    */
-  onConverterBegin(context) {
+  onConverterBegin(context: Context) {
     const getDefaultTheme = () => path.join(__dirname, '../theme/resources');
 
     Renderer.getDefaultTheme = getDefaultTheme;
@@ -55,6 +55,7 @@ export class ConverterPlugin extends ConverterComponent {
       // if (child.name == 'run/profile') {
       //   this.application.logger.log(inspect(child));
       // }
+
       this.importReflections(child, project);
     }
 

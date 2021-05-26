@@ -1,8 +1,9 @@
 import { Application } from 'typedoc/dist/lib/application';
 import { ParameterType } from 'typedoc/dist/lib/utils/options/declaration';
 
-import { ConverterPlugin } from './plugins/converter-plugin';
-import { TemplatePlugin } from './plugins/template-plugin';
+import { ConverterPlugin } from './plugins/converter';
+import { TemplatePlugin } from './plugins/template';
+import { SketchGroupPlugin } from './plugins/group';
 
 export = (PluginHost: Application) => {
   const app = PluginHost.owner;
@@ -70,6 +71,11 @@ export = (PluginHost: Application) => {
     name: 'indexTitle',
     type: ParameterType.String,
   });
+
+  if (app.converter.hasComponent('group')) {
+    app.converter.removeComponent('group');
+    app.converter.addComponent('jekyll-sketch-group', new SketchGroupPlugin(app.converter));
+  }
 
   app.converter.addComponent('jekyll-sketch-converter', new ConverterPlugin(app.converter));
   app.renderer.addComponent('jekyll-sketch-template', new TemplatePlugin(app.renderer));
