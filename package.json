@@ -8,7 +8,7 @@
     "typedoc": "^0.20.36",
     "typedoc-export-for-jekyll-plugin": "file:./_typedoc-export-for-jekyll-plugin",
     "typedoc-plugin-markdown": "^3.8.1",
-    "typescript": "^4.2.4"
+    "typescript": "~4.2.4"
   },
   "scripts": {
     "build-docs": "_scripts/assistants/build.sh"
