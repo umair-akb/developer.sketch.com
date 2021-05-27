@@ -59,7 +59,7 @@ definitions: ${definitions}
     }
     getPermalink(url, reflection) {
         const project = this.getProject(reflection);
-        const projectSlug = (project ? project.getAlias() + '/' : '');
+        const projectSlug = (project && project !== reflection ? project.getAlias() + '/' : '');
         return projectSlug + urls_1.stripMdExt(url);
     }
     getKindChapter(reflection) {
@@ -132,7 +132,7 @@ definitions: ${definitions}
     getGroupChildren(group) {
         return group
             .children
-            .map(child => [child.name, child.url].join(';'))
+            .map(child => [child.name, urls_1.stripMdExt(child.url)].join(';'))
             .join('|');
     }
 }

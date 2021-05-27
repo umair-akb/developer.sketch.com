@@ -44,7 +44,7 @@ module.exports = (PluginHost) => {
         help: '[Markdown Plugin] The file name of the entry document.',
         name: 'entryDocument',
         type: declaration_1.ParameterType.String,
-        defaultValue: 'README.md',
+        defaultValue: 'module.md',
     });
     app.options.addDeclaration({
         help: '[Markdown Plugin] Do not render in-page table of contents items.',

@@ -11,7 +11,7 @@ function urlFriendlyName(word) {
 exports.urlFriendlyName = urlFriendlyName;
 function stripMdExt(path) {
     if (!path)
-        return path;
+        return '';
     return path.replace(/(.*)(\.md)/, "$1");
 }
 exports.stripMdExt = stripMdExt;

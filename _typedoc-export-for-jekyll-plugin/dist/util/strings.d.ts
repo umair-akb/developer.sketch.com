@@ -1,1 +1,1 @@
-export declare function toTitleCase(word: string): string;
+export declare function toTitleCase(word: string | undefined): string;

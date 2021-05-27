@@ -67,7 +67,7 @@ definitions: ${definitions}
 
   private getPermalink(url, reflection) {
     const project = this.getProject(reflection);
-    const projectSlug = (project ? project.getAlias() + '/' : '')
+    const projectSlug = (project && project !== reflection ? project.getAlias() + '/' : '')
     return projectSlug + stripMdExt(url);
   }
 
@@ -160,7 +160,7 @@ definitions: ${definitions}
   private getGroupChildren(group: ReflectionGroup) {
     return group
       .children
-      .map(child => [child.name, child.url].join(';'))
+      .map(child => [child.name, stripMdExt(child.url)].join(';'))
       .join('|');
   }
 }

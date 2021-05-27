@@ -8,6 +8,8 @@ import {
   ReflectionGroup
 } from 'typedoc/dist/lib/models';
 
+export { inspect } from 'util';
+
 export function getGroupsChildren(groups: ReflectionGroup[]) {
   return groups.reduce((dst: Reflection[], group) => {
     group.children.forEach((child) => dst.push(child));

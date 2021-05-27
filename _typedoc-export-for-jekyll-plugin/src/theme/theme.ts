@@ -4,10 +4,19 @@ import { ContextAwareHelpers } from 'typedoc-plugin-markdown/dist/components/opt
 import { Renderer } from 'typedoc/dist/lib/output/renderer';
 import {
   DeclarationReflection,
-  Reflection
+  Reflection,
+  ReflectionKind
 } from 'typedoc/dist/lib/models';
 
 import { stripMdExt } from '../util/urls';
+
+type Mapping = {
+  kind: ReflectionKind[];
+  isLeaf: boolean;
+  directory: string;
+  template: string;
+};
+
 export default class SketchCustomTheme extends MarkdownTheme {
   renderer: Renderer;
   @BindOption('entryPoints')
@@ -22,7 +31,6 @@ export default class SketchCustomTheme extends MarkdownTheme {
   constructor(renderer: Renderer, basePath: string) {
     super(renderer, basePath);
     this.renderer = renderer;
-    this.renderer.application.options.setValue('entryDocument', 'module.md');
     this.renderer.application.options.setValue('hideBreadcrumbs', true);
     this.renderer.application.options.setValue('hidePageTitle', true);
 
@@ -39,6 +47,14 @@ export default class SketchCustomTheme extends MarkdownTheme {
 
       return stripMdExt(relative_url);
     });
+  }
+
+  /**
+   * Test if directory is output directory
+   * @param outputDirectory
+   */
+  isOutputDirectory(outputDirectory: string): boolean {
+    return true;
   }
 
   /**
@@ -61,5 +77,13 @@ export default class SketchCustomTheme extends MarkdownTheme {
         this.applyAnchorUrl(child, container);
       }
     });
+  }
+
+  get mappings(): Mapping[] {
+    const items = super.mappings;
+    for (const item of items) {
+      item.isLeaf = true;
+    }
+    return items;
   }
 }

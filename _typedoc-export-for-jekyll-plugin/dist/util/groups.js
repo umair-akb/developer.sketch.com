@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pruneReferences = exports.pruneGroupReferences = exports.importReflection = exports.importReflections = exports.importIntoGroup = exports.hasChild = exports.getGroupsChildren = void 0;
+exports.pruneReferences = exports.pruneGroupReferences = exports.importReflection = exports.importReflections = exports.importIntoGroup = exports.hasChild = exports.getGroupsChildren = exports.inspect = void 0;
 const models_1 = require("typedoc/dist/lib/models");
+var util_1 = require("util");
+Object.defineProperty(exports, "inspect", { enumerable: true, get: function () { return util_1.inspect; } });
 function getGroupsChildren(groups) {
     return groups.reduce((dst, group) => {
         group.children.forEach((child) => dst.push(child));

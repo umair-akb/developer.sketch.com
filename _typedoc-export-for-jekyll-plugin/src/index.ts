@@ -56,7 +56,7 @@ export = (PluginHost: Application) => {
     help: '[Markdown Plugin] The file name of the entry document.',
     name: 'entryDocument',
     type: ParameterType.String,
-    defaultValue: 'README.md',
+    defaultValue: 'module.md',
   });
 
   app.options.addDeclaration({

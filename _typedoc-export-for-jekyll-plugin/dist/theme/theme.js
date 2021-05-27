@@ -14,7 +14,6 @@ class SketchCustomTheme extends theme_1.default {
     constructor(renderer, basePath) {
         super(renderer, basePath);
         this.renderer = renderer;
-        this.renderer.application.options.setValue('entryDocument', 'module.md');
         this.renderer.application.options.setValue('hideBreadcrumbs', true);
         this.renderer.application.options.setValue('hidePageTitle', true);
         // utility helper
@@ -28,6 +27,13 @@ class SketchCustomTheme extends theme_1.default {
                 : url;
             return urls_1.stripMdExt(relative_url);
         });
+    }
+    /**
+     * Test if directory is output directory
+     * @param outputDirectory
+     */
+    isOutputDirectory(outputDirectory) {
+        return true;
     }
     /**
      * Similar to DefaultTheme.applyAnchorUrl method with added but the anchors are computed from the reflection structure
@@ -49,6 +55,13 @@ class SketchCustomTheme extends theme_1.default {
                 this.applyAnchorUrl(child, container);
             }
         });
+    }
+    get mappings() {
+        const items = super.mappings;
+        for (const item of items) {
+            item.isLeaf = true;
+        }
+        return items;
     }
 }
 SketchCustomTheme.HANDLEBARS = theme_1.default.HANDLEBARS;
