@@ -1,3 +1,12 @@
+{{#each children}}
+{{#unless hasOwnDocument}}
+
+{{#if name}}
+
+##### {{#ifNamedAnchors}}<a id="{{anchor}}" name="{{this.anchor}}"></a> {{/ifNamedAnchors}}{{ escape name }}
+
+{{/if}}
+
 {{#if signatures}}
 
 {{#each signatures}}
@@ -16,23 +25,11 @@
 
 {{#if isReference}}
 
-{{!> member.reference}}
-{{#with tryGetTargetReflectionDeep}}
-{{> member.main }}
-{{/with}}
+{{> member.reference}}
 
 {{else}}
 
-
 {{> member.declaration}}
-
-
-{{#ifIsEnumeration}}
-#### Enumeration members
-
-{{> member.enum }}
-{{/ifIsEnumeration}}
-
 
 {{/if}}
 
@@ -41,7 +38,8 @@
 {{/if}}
 
 {{#unless @last}}
-{{#unless hasOwnDocument}}
 ___
 {{/unless}}
+
 {{/unless}}
+{{/each}}

@@ -23,7 +23,16 @@
 
 {{else}}
 
+
 {{> member.declaration}}
+
+
+{{#ifIsEnumeration}}
+#### Enumeration members
+
+{{> member.enum }}
+{{/ifIsEnumeration}}
+
 
 {{/if}}
 

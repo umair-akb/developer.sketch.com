@@ -5,8 +5,11 @@ LOCAL_ASSISTANTS_OUT_PATH=pages/assistants
 REL_ASSISTANTS_PACKAGES=packages
 REL_ASSISTANTS_PACKAGE_UTILS=utils/src
 REL_ASSISTANTS_PACKAGE_TYPES=types/src
+TYPEDOC_RUN_PLUGIN="typedoc-export-for-jekyll-plugin"
+# TYPEDOC_RUN_PLUGIN="typedoc-plugin-markdown"
 TYPEDOC_CUSTOM_PLUGIN="$PWD/_typedoc-export-for-jekyll-plugin"
 TYPEDOC_CUSTOM_THEME="--theme $TYPEDOC_CUSTOM_PLUGIN/dist/theme"
+# TYPEDOC_CUSTOM_THEME=""
 SKIP_INSTALL=0
 SKIP_FETCH=0
 
@@ -129,7 +132,7 @@ fi
 
 ABS_LOCAL_ASSISTANTS_OUT=$([[ "$LOCAL_ASSISTANTS_OUT_PATH" = /* ]] && echo "$LOCAL_ASSISTANTS_OUT_PATH" || echo "$PWD/$LOCAL_ASSISTANTS_OUT_PATH")
 
-TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --filenameSeparator \/ --readme none --plugin typedoc-export-for-jekyll-plugin --excludeExternals --exclude **/__tests__/*"
+TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --filenameSeparator \/ --readme none --plugin $TYPEDOC_RUN_PLUGIN --excludeExternals --exclude **/__tests__/*"
 
 CMD_TYPEDOC_PACKAGE_TYPES="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Types --entryDocument types.md --out $ABS_LOCAL_ASSISTANTS_OUT $ABS_ASSISTANTS_PKG_TYPES"
 CMD_TYPEDOC_PACKAGE_UTILS="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Utils --entryDocument utils.md --out $ABS_LOCAL_ASSISTANTS_OUT $ABS_ASSISTANTS_PKG_UTILS --disableOutputCheck"

@@ -8,6 +8,7 @@ import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { stripMdExt } from '../util/urls';
 import { toTitleCase } from '../util/strings';
 
+
 /**
  * A plugin that wraps the generated output with a layout template.
  *
@@ -51,7 +52,6 @@ definitions: ${definitions}
   private onRendererPageBegin(pageEvent) {
     // This is where we should compute the permalink
     // for the Jekyll header.
-
     pageEvent.permalink = this.getPermalink(pageEvent.url, pageEvent.model);
     pageEvent.definitions = this.getProjectLinks(pageEvent.model);
     return pageEvent;

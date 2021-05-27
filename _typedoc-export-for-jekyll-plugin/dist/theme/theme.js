@@ -46,7 +46,12 @@ class SketchCustomTheme extends theme_1.default {
         if (!reflection.url || !theme_1.default.URL_PREFIX.test(reflection.url)) {
             const reflectionId = reflection.name.toLowerCase();
             const anchor = this.toAnchorRef(reflectionId);
-            reflection.url = '#' + anchor;
+            if (reflection.kindOf(models_1.ReflectionKind.EnumMember)) {
+                reflection.url = container.url + '-' + anchor;
+            }
+            else {
+                reflection.url = '#' + anchor;
+            }
             reflection.anchor = anchor;
             reflection.hasOwnDocument = false;
         }
@@ -56,12 +61,39 @@ class SketchCustomTheme extends theme_1.default {
             }
         });
     }
-    get mappings() {
-        const items = super.mappings;
-        for (const item of items) {
-            item.isLeaf = true;
+    /**
+     * This is mostly a copy of the TypeDoc DefaultTheme.buildUrls method with .html ext switched to .md
+     * Builds the url for the the given reflection and all of its children.
+     *
+     * @param reflection  The reflection the url should be created for.
+     * @param urls The array the url should be appended to.
+     * @returns The altered urls array.
+     */
+    buildUrls(reflection, urls) {
+        const mapping = this.mappings.find((mapping) => reflection.kindOf(mapping.kind));
+        if (mapping) {
+            if (!reflection.url || !theme_1.default.URL_PREFIX.test(reflection.url)) {
+                const url = this.toUrl(mapping, reflection);
+                urls.push(new typedoc_1.UrlMapping(url, reflection, mapping.template));
+                reflection.url = url;
+                reflection.hasOwnDocument = true;
+            }
+            for (const child of reflection.children || []) {
+                if (mapping.isLeaf) {
+                    this.applyAnchorUrl(child, reflection);
+                }
+                else {
+                    this.buildUrls(child, urls);
+                }
+            }
         }
-        return items;
+        else if (reflection.parent) {
+            this.applyAnchorUrl(reflection, reflection.parent);
+        }
+        return urls;
+    }
+    get mappings() {
+        return [];
     }
 }
 SketchCustomTheme.HANDLEBARS = theme_1.default.HANDLEBARS;

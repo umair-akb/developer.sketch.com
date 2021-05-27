@@ -1,4 +1,4 @@
-import { BindOption } from 'typedoc';
+import { BindOption, UrlMapping } from 'typedoc';
 import MarkdownTheme from 'typedoc-plugin-markdown/dist/theme';
 import { ContextAwareHelpers } from 'typedoc-plugin-markdown/dist/components/options';
 import { Renderer } from 'typedoc/dist/lib/output/renderer';
@@ -7,16 +7,9 @@ import {
   Reflection,
   ReflectionKind
 } from 'typedoc/dist/lib/models';
+import { TemplateMapping } from 'typedoc/dist/lib/output/themes/DefaultTheme';
 
 import { stripMdExt } from '../util/urls';
-
-type Mapping = {
-  kind: ReflectionKind[];
-  isLeaf: boolean;
-  directory: string;
-  template: string;
-};
-
 export default class SketchCustomTheme extends MarkdownTheme {
   renderer: Renderer;
   @BindOption('entryPoints')
@@ -68,7 +61,11 @@ export default class SketchCustomTheme extends MarkdownTheme {
     if (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url)) {
       const reflectionId = reflection.name.toLowerCase();
       const anchor = this.toAnchorRef(reflectionId);
-      reflection.url = '#' + anchor;
+      if (reflection.kindOf(ReflectionKind.EnumMember)) {
+        reflection.url = container.url + '-' + anchor;
+      } else {
+        reflection.url = '#' + anchor;
+      }
       reflection.anchor = anchor;
       reflection.hasOwnDocument = false;
     }
@@ -79,11 +76,45 @@ export default class SketchCustomTheme extends MarkdownTheme {
     });
   }
 
-  get mappings(): Mapping[] {
-    const items = super.mappings;
-    for (const item of items) {
-      item.isLeaf = true;
+  /**
+   * This is mostly a copy of the TypeDoc DefaultTheme.buildUrls method with .html ext switched to .md
+   * Builds the url for the the given reflection and all of its children.
+   *
+   * @param reflection  The reflection the url should be created for.
+   * @param urls The array the url should be appended to.
+   * @returns The altered urls array.
+   */
+
+  buildUrls(
+    reflection: DeclarationReflection,
+    urls: UrlMapping[],
+  ): UrlMapping[] {
+    const mapping = this.mappings.find((mapping) =>
+      reflection.kindOf(mapping.kind),
+    );
+
+    if (mapping) {
+      if (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url)) {
+        const url = this.toUrl(mapping, reflection);
+        urls.push(new UrlMapping(url, reflection, mapping.template));
+        reflection.url = url;
+        reflection.hasOwnDocument = true;
+      }
+      for (const child of reflection.children || []) {
+        if (mapping.isLeaf) {
+          this.applyAnchorUrl(child, reflection);
+        } else {
+          this.buildUrls(child, urls);
+        }
+      }
+    } else if (reflection.parent) {
+      this.applyAnchorUrl(reflection, reflection.parent);
     }
-    return items;
+
+    return urls;
+  }
+
+  get mappings(): TemplateMapping[] {
+    return [];
   }
 }
