@@ -1,97 +1,99 @@
-{{> header}}
+<section class="assistants reference reflection" markdown="1">
+  {{> header}}
 
-{{> title}}
+  {{> title}}
 
-{{#with model}}
+  {{#with model}}
 
-{{#if hasComment}}
+  {{#if hasComment}}
 
-{{> comment}}
+  {{> comment}}
 
-{{/if}}
+  {{/if}}
 
-{{/with}}
+  {{/with}}
 
-{{#if model.typeParameters}}
+  {{#if model.typeParameters}}
 
-## Type parameters
+  ## Type parameters
 
-{{#with model.typeParameters}}
+  {{#with model.typeParameters}}
 
-{{{parameterTable 'typeParameters'}}}
+  {{{parameterTable 'typeParameters'}}}
 
-{{/with}}
+  {{/with}}
 
-{{/if}}
+  {{/if}}
 
-{{#ifShowTypeHierarchy}}
+  {{#ifShowTypeHierarchy}}
 
-## Hierarchy
+  ## Hierarchy
 
-{{#with model.typeHierarchy}}
+  {{#with model.typeHierarchy}}
 
-{{{hierarchy 0}}}
+  {{{hierarchy 0}}}
 
-{{/with}}
+  {{/with}}
 
-{{/ifShowTypeHierarchy}}
+  {{/ifShowTypeHierarchy}}
 
-{{#if model.implementedTypes}}
+  {{#if model.implementedTypes}}
 
-## Implements
+  ## Implements
 
-{{#each model.implementedTypes}}
-- {{{type false}}}
-{{/each}}
+  {{#each model.implementedTypes}}
+  - {{{type false}}}
+  {{/each}}
 
-{{/if}}
+  {{/if}}
 
-{{#if model.implementedBy}}
+  {{#if model.implementedBy}}
 
-## Implemented by
+  ## Implemented by
 
-{{#each model.implementedBy}}
-- {{{type false}}}
-{{/each}}
+  {{#each model.implementedBy}}
+  - {{{type false}}}
+  {{/each}}
 
-{{/if}}
+  {{/if}}
 
-{{#if model.signatures}}
+  {{#if model.signatures}}
 
-## Callable
+  ## Callable
 
-{{#with model}}
+  {{#with model}}
 
-{{#each signatures}}
+  {{#each signatures}}
 
-{{> member.signature showSources=true }}
+  {{> member.signature showSources=false }}
 
-{{/each}}
+  {{/each}}
 
-{{/with}}
+  {{/with}}
 
-{{/if}}
+  {{/if}}
 
-{{#if model.indexSignature}}
+  {{#if model.indexSignature}}
 
-## Indexable
+  ## Indexable
 
-{{#with model}}
+  {{#with model}}
 
-{{#with indexSignature}}
+  {{#with indexSignature}}
 
-{{{indexSignatureTitle}}}
+  {{{indexSignatureTitle}}}
 
-{{> comment}}
+  {{> comment}}
 
-{{/with}}
+  {{/with}}
 
-{{/with}}
+  {{/with}}
 
-{{/if}}
+  {{/if}}
 
-{{#with model}}
+  {{#with model}}
 
-{{> main}}
+  {{> main}}
 
-{{/with}}
+  {{/with}}
+</section>

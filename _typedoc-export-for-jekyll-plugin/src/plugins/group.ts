@@ -136,7 +136,7 @@ export class GroupPlugin extends ConverterComponent {
         .sort((a, b) => a.name.localeCompare(b.name))
         .forEach((child: DeclarationReflection) => {
           if (child.kindOf(ReflectionKind.SomeModule)) {
-            if (child.name == 'index') {
+            if (child.name == 'index' || child.name == 'global') {
               // Exclude index direct submodule of project.
               return;
             }

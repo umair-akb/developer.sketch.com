@@ -132,7 +132,7 @@ fi
 
 ABS_LOCAL_ASSISTANTS_OUT=$([[ "$LOCAL_ASSISTANTS_OUT_PATH" = /* ]] && echo "$LOCAL_ASSISTANTS_OUT_PATH" || echo "$PWD/$LOCAL_ASSISTANTS_OUT_PATH")
 
-TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --filenameSeparator \/ --readme none --plugin $TYPEDOC_RUN_PLUGIN --excludeExternals --exclude **/__tests__/*"
+TYPEDOC_PARAMS="$TYPEDOC_CUSTOM_THEME --readme none --plugin $TYPEDOC_RUN_PLUGIN --excludeExternals --exclude **/__tests__/*"
 
 CMD_TYPEDOC_PACKAGE_TYPES="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Types --entryDocument types.md --out $ABS_LOCAL_ASSISTANTS_OUT $ABS_ASSISTANTS_PKG_TYPES"
 CMD_TYPEDOC_PACKAGE_UTILS="$TYPEDOC_BIN $TYPEDOC_PARAMS --name Utils --entryDocument utils.md --out $ABS_LOCAL_ASSISTANTS_OUT $ABS_ASSISTANTS_PKG_UTILS --disableOutputCheck"

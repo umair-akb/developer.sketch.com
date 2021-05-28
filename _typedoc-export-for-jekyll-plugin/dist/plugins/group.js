@@ -75,7 +75,7 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
                 .forEach((child) => {
                 var _a;
                 if (child.kindOf(models_1.ReflectionKind.SomeModule)) {
-                    if (child.name == 'index') {
+                    if (child.name == 'index' || child.name == 'global') {
                         // Exclude index direct submodule of project.
                         return;
                     }

@@ -2,7 +2,7 @@
 
 {{#each signatures}}
 
-{{> member.signature showSources=true }}
+{{> member.signature showSources=false }}
 
 {{/each}}
 
@@ -24,7 +24,7 @@
 {{else}}
 
 
-{{> member.declaration}}
+{{> member.declaration showSources=false }}
 
 
 {{#ifIsEnumeration}}
@@ -39,9 +39,3 @@
 {{/if}}
 
 {{/if}}
-
-{{#unless @last}}
-{{#unless hasOwnDocument}}
-___
-{{/unless}}
-{{/unless}}

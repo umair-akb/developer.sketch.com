@@ -3,43 +3,10 @@
 
 {{#if name}}
 
-##### {{#ifNamedAnchors}}<a id="{{anchor}}" name="{{this.anchor}}"></a> {{/ifNamedAnchors}}{{ escape name }}
+<p class="enum-member" markdown="1">{{ escape name }}</p>
 
 {{/if}}
 
-{{#if signatures}}
-
-{{#each signatures}}
-
-{{> member.signature showSources=true }}
-
-{{/each}}
-
-{{else}}
-
-{{#if hasGetterOrSetter}}
-
-{{> member.getterSetter}}
-
-{{else}}
-
-{{#if isReference}}
-
-{{> member.reference}}
-
-{{else}}
-
-{{> member.declaration}}
-
-{{/if}}
-
-{{/if}}
-
-{{/if}}
-
-{{#unless @last}}
-___
-{{/unless}}
 
 {{/unless}}
 {{/each}}

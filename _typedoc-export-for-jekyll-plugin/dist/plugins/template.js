@@ -37,6 +37,7 @@ section: assistants
 permalink: /assistants/reference/${permalink}
 chapter: ${chapter}
 excerpt: ${excerpt}
+order: 403
 definitions: ${definitions}
 ---
 

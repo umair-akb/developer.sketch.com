@@ -2,7 +2,11 @@
 
 {{#if name}}
 
-### {{#ifNamedAnchors}}<a id="{{anchor}}" name="{{this.anchor}}"></a> {{/ifNamedAnchors}}{{ escape name }}
+
+<h3 id="{{escape name}}">
+  {{#ifNamedAnchors}}<a id="{{anchor}}" name="{{this.anchor}}"></a> {{/ifNamedAnchors}}{{escape name}}
+  <span class="source-link" markdown="1">{{showSourceLink}}</span>
+</h3>
 
 {{/if}}
 
