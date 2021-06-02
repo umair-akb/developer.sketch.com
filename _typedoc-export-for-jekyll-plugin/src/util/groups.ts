@@ -95,3 +95,7 @@ export function pruneReferences(parent: ContainerReflection) {
     })
 
 }
+
+export function sortReferenceByName(a: Reflection, b: Reflection): number {
+  return a.name.localeCompare(b.name)
+}

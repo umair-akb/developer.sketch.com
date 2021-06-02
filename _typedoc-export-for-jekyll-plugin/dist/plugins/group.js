@@ -71,7 +71,7 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
             const children = reflection.children || [];
             reflection.children = [];
             children
-                .sort((a, b) => a.name.localeCompare(b.name))
+                .sort(GroupUtils.sortReferenceByName)
                 .forEach((child) => {
                 var _a;
                 if (child.kindOf(models_1.ReflectionKind.SomeModule)) {
@@ -82,6 +82,8 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
                     const group = new models_1.ReflectionGroup(child.name, models_1.ReflectionKind.All);
                     GroupUtils.importIntoGroup(group, child, reflection, this.application.logger);
                     if (group.children.length > 0) {
+                        // Sort imported child reflections, by name
+                        group.children = group.children.sort(GroupUtils.sortReferenceByName);
                         groups.push(group);
                     }
                 }

@@ -7,3 +7,4 @@ export declare function importReflections(source: DeclarationReflection, target:
 export declare function importReflection(source: any, target: ProjectReflection): void;
 export declare function pruneGroupReferences(group: ReflectionGroup): void;
 export declare function pruneReferences(parent: ContainerReflection): void;
+export declare function sortReferenceByName(a: Reflection, b: Reflection): number;

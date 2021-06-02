@@ -133,7 +133,7 @@ export class GroupPlugin extends ConverterComponent {
       const children = reflection.children || [];
       reflection.children = [];
       children
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort(GroupUtils.sortReferenceByName)
         .forEach((child: DeclarationReflection) => {
           if (child.kindOf(ReflectionKind.SomeModule)) {
             if (child.name == 'index' || child.name == 'global') {
@@ -146,6 +146,9 @@ export class GroupPlugin extends ConverterComponent {
             GroupUtils.importIntoGroup(group, child, reflection, this.application.logger);
 
             if (group.children.length > 0) {
+              // Sort imported child reflections, by name
+              group.children = group.children.sort(GroupUtils.sortReferenceByName);
+
               groups.push(group);
             }
           } else {
