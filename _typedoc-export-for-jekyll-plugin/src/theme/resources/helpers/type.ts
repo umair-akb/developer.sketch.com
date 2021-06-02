@@ -135,8 +135,8 @@ function getDeclarationType(model: DeclarationReflection) {
     if (declarationIndexSignature) {
       const key = declarationIndexSignature.parameters
         ? declarationIndexSignature.parameters.map(
-            (param) => `[${param.name}: ${param.type}]`,
-          )
+          (param) => `[${param.name}: ${param.type}]`,
+        )
         : '';
       const obj = type.call(declarationIndexSignature.type);
       indexSignature = `${key}: ${obj}; `;
@@ -146,19 +146,16 @@ function getDeclarationType(model: DeclarationReflection) {
       model.children.map((obj) => {
         return `\`${obj.name}${obj.flags.isOptional ? '?' : ''}\`: ${type.call(
           obj.signatures || obj.children ? obj : obj.type,
-        )} ${
-          obj.defaultValue && obj.defaultValue !== '...'
+        )} ${obj.defaultValue && obj.defaultValue !== '...'
             ? `= ${escape(obj.defaultValue)}`
             : ''
-        }`;
+          }`;
       });
-    return `{ ${indexSignature ? indexSignature : ''}${
-      types ? types.join('; ') : ''
-    } }${
-      model.defaultValue && model.defaultValue !== '...'
+    return `{ ${indexSignature ? indexSignature : ''}${types ? types.join('; ') : ''
+      } }${model.defaultValue && model.defaultValue !== '...'
         ? `= ${escape(model.defaultValue)}`
         : ''
-    }`;
+      }`;
   }
   return '{}';
 }
@@ -167,15 +164,14 @@ export function getFunctionType(modelSignatures: SignatureReflection[]) {
   const functions = modelSignatures.map((fn) => {
     const typeParams = fn.typeParameters
       ? `<${fn.typeParameters
-          .map((typeParameter) => typeParameter.name)
-          .join(', ')}\\>`
+        .map((typeParameter) => typeParameter.name)
+        .join(', ')}\\>`
       : [];
     const params = fn.parameters
       ? fn.parameters.map((param) => {
-          return `${param.flags.isRest ? '...' : ''}\`${param.name}${
-            param.flags.isOptional ? '?' : ''
+        return `${param.flags.isRest ? '...' : ''}\`${param.name}${param.flags.isOptional ? '?' : ''
           }\`: ${type.call(param.type ? param.type : param)}`;
-        })
+      })
       : [];
     const returns = type.call(fn.type);
 
@@ -189,12 +185,12 @@ function getReferenceType(model: ReferenceType, emphasis) {
     const reflection =
       model.reflection && model.reflection.url
         ? [
-            `[*${escape(
-              model.reflection.name,
-            )}*](${MarkdownTheme.HANDLEBARS.helpers.relativeURL(
-              model.reflection.url,
-            )})`,
-          ]
+          `[*${escape(
+            model.reflection.name,
+          )}*](${MarkdownTheme.HANDLEBARS.helpers.relativeURL(
+            model.reflection.url,
+          )})`,
+        ]
         : [emphasis ? `*${escape(model.name)}*` : escape(model.name)];
     if (model.typeArguments && model.typeArguments.length > 0) {
       reflection.push(
@@ -218,7 +214,7 @@ function getArrayType(model: ArrayType, emphasis: boolean) {
 function getUnionType(model: UnionType, emphasis: boolean) {
   return model.types
     .map((unionType) => type.call(unionType, 'none', emphasis))
-    .join(` \\| `);
+    .join(` | `);
 }
 
 function getIntersectionType(model: IntersectionType) {

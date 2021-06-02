@@ -40,7 +40,7 @@ function propertyTable() {
             : `\`${getName(property)}\``;
         nameCol.push(name);
         row.push(nameCol.join(' '));
-        row.push(type_1.type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '\\|'));
+        row.push(type_1.type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '|'));
         if (hasComments) {
             if (property.comment) {
                 row.push(strip_line_breaks_1.stripLineBreaks(comment_1.comment.call(property.comment)));
@@ -52,7 +52,7 @@ function propertyTable() {
         return `| ${row.join(' | ')} |\n`;
     });
     const output = `\n| ${headers.join(' | ')} |\n| ${headers
-        .map(() => ':------')
+        .map(() => '---')
         .join(' | ')} |\n${rows.join('')}`;
     return output;
 }
@@ -63,10 +63,10 @@ function getName(property) {
         md.push('...');
     }
     if (property.getSignature) {
-        md.push(signature_title_1.signatureTitle.call(property.getSignature, 'get', false));
+        md.push(signature_title_1.simpleSignatureTitle.call(property.getSignature, 'get', false));
     }
     else if (property.setSignature) {
-        md.push(signature_title_1.signatureTitle.call(property.setSignature, 'set', false));
+        md.push(signature_title_1.simpleSignatureTitle.call(property.setSignature, 'set', false));
     }
     else {
         md.push(property.name);

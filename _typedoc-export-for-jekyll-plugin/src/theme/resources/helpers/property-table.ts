@@ -2,7 +2,7 @@ import { DeclarationReflection } from 'typedoc';
 
 import { comment } from './comment';
 import { escape } from './escape';
-import { signatureTitle } from './signature-title';
+import { simpleSignatureTitle as signatureTitle } from './signature-title';
 import { stripLineBreaks } from './strip-line-breaks';
 import { type } from './type';
 
@@ -55,7 +55,7 @@ export function propertyTable(this: DeclarationReflection[]) {
         : `\`${getName(property)}\``;
     nameCol.push(name);
     row.push(nameCol.join(' '));
-    row.push(type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '\\|'));
+    row.push(type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '|'));
 
     if (hasComments) {
       if (property.comment) {
@@ -68,7 +68,7 @@ export function propertyTable(this: DeclarationReflection[]) {
   });
 
   const output = `\n| ${headers.join(' | ')} |\n| ${headers
-    .map(() => ':------')
+    .map(() => '---')
     .join(' | ')} |\n${rows.join('')}`;
 
   return output;

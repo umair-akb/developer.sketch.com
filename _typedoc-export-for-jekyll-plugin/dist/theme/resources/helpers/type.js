@@ -139,7 +139,7 @@ function getArrayType(model, emphasis) {
 function getUnionType(model, emphasis) {
     return model.types
         .map((unionType) => type.call(unionType, 'none', emphasis))
-        .join(` \\| `);
+        .join(` | `);
 }
 function getIntersectionType(model) {
     return model.types

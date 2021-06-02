@@ -62,17 +62,19 @@ export function simpleSignatureTitle(
 ) {
   const md: string[] = [];
 
+  md.push('```typescript\n');
+
   if (accessor) {
-    md.push(`${accessor} **${this.name}**`);
+    md.push(`${accessor} ${this.name}`);
   } else if (this.name !== '__call' && this.name !== '__type') {
-    md.push(`**${this.name}**`);
+    md.push(`${this.name}`);
   }
 
   if (this.typeParameters) {
     md.push(
       `<${this.typeParameters
         .map((typeParameter) => typeParameter.name)
-        .join(', ')}\\>`,
+        .join(', ')}>`,
     );
   }
 
@@ -83,11 +85,11 @@ export function simpleSignatureTitle(
         if (param.flags.isRest) {
           paramsmd.push('...');
         }
-        paramsmd.push(`\`${param.name}`);
+        paramsmd.push(`${param.name}`);
         if (param.flags.isOptional || param.defaultValue) {
           paramsmd.push('?');
         }
-        paramsmd.push(`\`: ${type.call(param.type, true)}`);
+        paramsmd.push(`: ${type.call(param.type, false)}`);
         return paramsmd.join('');
       })
       .join(', ')
@@ -96,6 +98,8 @@ export function simpleSignatureTitle(
   if (this.type) {
     md.push(`: ${type.call(this.type, 'all')}`);
   }
+
+  md.push('\n```');
 
   return md.join('') + (standalone ? '\n' : '');
 }
