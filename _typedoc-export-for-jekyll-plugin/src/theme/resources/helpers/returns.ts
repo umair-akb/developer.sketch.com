@@ -4,7 +4,7 @@ import { propertyTable } from './property-table';
 import { type } from './type';
 
 export function returns(this: ReflectionType) {
-  const md = [`**Returns:** ${type.call(this, 'object')}`];
+  const md = [`**Returns:** \`${type.call(this, 'object')}\`{:.language-ts}`];
   if (
     this instanceof ReflectionType &&
     this.declaration &&
