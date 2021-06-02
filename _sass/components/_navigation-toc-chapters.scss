@@ -3,8 +3,58 @@
   color: #a0a0a0;
   margin-bottom: 0;
   font-size: 0.85rem;
+  margin-block-start: unset;
 }
 
 .toc-nav li.chapter-group > ol.group-list > li {
   padding: 0.12rem 0 !important;
+}
+
+.toc-nav li.chapter-group > input[name="group-collapse"] {
+  display: none;
+  font-size: 0;
+  line-height: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.toc-nav li.chapter-group > .group-title > label {
+  margin: auto !important;
+  display: block;
+  text-transform:uppercase;
+  color: #a0a0a0;
+  margin-bottom: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  cursor: pointer;
+}
+
+.toc-nav li.chapter-group > .group-title > label:after {
+  display: inline-block;
+  margin-left: 5px;
+  line-height: 0;
+  vertical-align: baseline;
+  margin-top: -0.2em;
+  transition: 0.4s;
+  content: "\25BC";
+  transform-origin: center;
+}
+
+ 
+.toc-nav li.chapter-group > input[name="group-collapse"]:checked ~ .group-title > label:after {
+  transform: rotate(180deg);
+  transition: 0.4s;
+}
+
+.toc-nav li.chapter-group > ol.group-list {
+  overflow: hidden;
+  max-height: 0px;
+  position: relative;
+  transition: max-height 0.25s ease-in-out;
+}
+
+.toc-nav li.chapter-group > input[name="group-collapse"]:checked ~ .group-list {
+  max-height: 1500px;
+  transition: max-height 0.25s ease-in-out;
 }
