@@ -1,45 +1,28 @@
 {% if include.chapters.size > 0 %}
-{% capture all_main_chapters %}{% for chapter in include.chapters %}{% assign main_chapter = chapter | removeprefix: include.prefix | split: "/" | first %}{{ main_chapter }}{% if forloop.last == false %}/{% endif%}{% endfor %}{% endcapture %}
-{% assign all_chapters = all_main_chapters | split: "/" | uniq %}
-  {% if include.prefix == "" %}
-  <ol>
-  {% endif %}
-  {% for chapter in all_chapters %}
-    {% if chapter == nil or chapter == '' %}{% continue %}{% endif %}
-      {% assign chapter_prefix = include.prefix | append: chapter %}
-      {% assign prefix = chapter_prefix | append: "/" %}
-      {% assign chapter_page = include.pages | where: "chapter", include.group | where: "title", chapter | first %}
-      {% capture chapter_header %}
-        {% if chapter_page %}
-          <a href="{{chapter_page.url}}" title="{{chapter_page.title}}" {% if page.url==chapter_page.url %} class="active" {% endif %}>{{chapter}}</a>
-        {% else %}
-          {{chapter}}
-        {% endif %}
-      {% endcapture %}
-    <li>
-      {% if include.prefix == "" %}
-        <h5>{{chapter_header}}</h5>
-      {% else %}
-        <h6>{{chapter_header}}</h6>
-      {% endif %}
-      <ol>
-        {% if chapter_page %}
-          {% include nav-subpage-toc.html page=chapter_page %}
-        {% endif %}
-        
-        {% assign subchapters = include.chapters | startswith: prefix | uniq %}
-        {% assign subpages = include.pages | where: "chapter", chapter_prefix | sort: "order" %}
-        
-        {% for subpage in subpages %}
-          <li>
-            <a href="{{subpage.url}}" title="{{subpage.title}}" {% if page.url==subpage.url %} class="active" {% endif %}>{{subpage.title}}</a>
-          </li>
-          {% include nav-subpage-toc.html page=subpage %}
-        {% endfor %}
-      </ol>
-    </li>
+<ol>
+  {% for chapter in include.chapters %}
+  {% if chapter == nil or chapter == '' %}{% continue %}{% endif %}
+  <li>
+    <h5>{{chapter}}</h5>
+    <ol>
+      {% assign subpage_order_groups = include.pages | where: "chapter", chapter | group_by: "order" | sort: "name" %}
+      {% for subpage_order in subpage_order_groups %}
+      {% assign subpages = subpage_order.items | sort: "title" %}
+      {% for subpage in subpages %}
+      <li>
+        <a href="{{subpage.url}}" title="{{subpage.title}}" {% if page.url==subpage.url %} class="active" {% endif %}>
+          {%- if chapter == "Reference" and include.section == "assistants" -%}
+          {{subpage.title | upcase}}
+          {%- else -%}
+          {{subpage.title}}
+          {%- endif -%}
+        </a>
+      </li>
+      {% include nav-subpage-toc.html page=subpage %}
+      {% endfor %}
+      {% endfor %}
+    </ol>
+  </li>
   {% endfor %}
-  {% if include.prefix == "" %}
-  </ol>
-  {% endif %}
+</ol>
 {% endif %}
