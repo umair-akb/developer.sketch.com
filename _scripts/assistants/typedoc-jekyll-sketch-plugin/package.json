@@ -1,5 +1,5 @@
 {
-  "name": "typedoc-export-for-jekyll-plugin",
+  "name": "typedoc-jekyll-sketch-plugin",
   "version": "1.0.0",
   "description": "A TypeDoc plugin to render Jekyll templates",
   "main": "dist/index.js",

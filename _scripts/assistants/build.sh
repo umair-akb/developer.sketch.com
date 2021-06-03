@@ -5,13 +5,14 @@ LOCAL_ASSISTANTS_OUT_PATH=pages/assistants
 REL_ASSISTANTS_PACKAGES=packages
 REL_ASSISTANTS_PACKAGE_UTILS=utils/src
 REL_ASSISTANTS_PACKAGE_TYPES=types/src
-TYPEDOC_RUN_PLUGIN="typedoc-export-for-jekyll-plugin"
+TYPEDOC_RUN_PLUGIN="typedoc-jekyll-sketch-plugin"
 # TYPEDOC_RUN_PLUGIN="typedoc-plugin-markdown"
-TYPEDOC_CUSTOM_PLUGIN="$PWD/_typedoc-export-for-jekyll-plugin"
+TYPEDOC_CUSTOM_PLUGIN="$PWD/node_modules/typedoc-jekyll-sketch-plugin"
 TYPEDOC_CUSTOM_THEME="--theme $TYPEDOC_CUSTOM_PLUGIN/dist/theme"
 # TYPEDOC_CUSTOM_THEME=""
 SKIP_INSTALL=0
 SKIP_FETCH=0
+SKIP_FETCH_PROMPT=0
 
 # Loop through command arguments
 while [ "$1" != "" ];
@@ -26,6 +27,9 @@ do
 			                    ;;
    -NF  | --skip-fetch  )  shift
                           SKIP_FETCH=1
+                          ;;
+   -NFP | --skip-prompt )  shift
+                          SKIP_FETCH_PROMPT=1
                           ;;
    *)
     shift
@@ -47,9 +51,13 @@ if [[ $? -ne 0 ]]; then
 fi
 
 if [[ $SKIP_FETCH -eq 0 ]]; then
-  read -e -p "Enter path for sketch-assistants repo (or empty for git clone):" ASSISTANTS_PATH
+  if [[ $SKIP_FETCH_PROMPT -eq 0 ]]; then
+    read -e -p "Enter path for sketch-assistants repo (or empty for git clone):" ASSISTANTS_PATH
 
-  ASSISTANTS_PATH=${ASSISTANTS_PATH:-$LOCAL_ASSISTANTS_PATH}
+    ASSISTANTS_PATH=${ASSISTANTS_PATH:-$LOCAL_ASSISTANTS_PATH}
+  else
+    ASSISTANTS_PATH="$LOCAL_ASSISTANTS_PATH"
+  fi
 
   if [[ ! -d $ASSISTANTS_PATH ]]; then
 
