@@ -4,7 +4,7 @@
 {%- assign group_def = inner_group | split: "||" -%}
 {%- assign group_name = group_def | first -%}
 <li class="chapter-group">
-  <input type="checkbox" name="group-collapse" id="handle-{{group_name}}">
+  <input type="radio" name="group-collapse" id="handle-{{group_name}}">
   <h5 class="group-title"><label for="handle-{{group_name}}">{{group_name}}</label></h5>
   <ol class="group-list">
     {%- assign link_defs = group_def | last | split: "|" -%}

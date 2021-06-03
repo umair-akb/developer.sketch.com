@@ -5,7 +5,7 @@ const typedoc_1 = require("typedoc");
 const comment_1 = require("./comment");
 const escape_1 = require("./escape");
 const strip_line_breaks_1 = require("./strip-line-breaks");
-const type_1 = require("./type");
+const type2_1 = require("./type2");
 function parameterTable(kind) {
     const flattenParams = (current) => {
         var _a, _b, _c;
@@ -47,7 +47,7 @@ function table(parameters, kind) {
         const row = [];
         row.push(`\`${parameter.flags.isRest ? '...' : ''}${parameter.name}${parameter.flags.isOptional ? '?' : ''}\``);
         if (showTypes) {
-            row.push(parameter.type ? type_1.type.call(parameter.type, 'object') : '-');
+            row.push(parameter.type ? type2_1.type.call(parameter.type, 'object') : ' ');
         }
         if (showDefaults) {
             row.push(getDefaultValue(parameter));
@@ -57,23 +57,23 @@ function table(parameters, kind) {
                 row.push(strip_line_breaks_1.stripLineBreaks(comment_1.comment.call(parameter.comment)).replace(/\|/g, '\\|'));
             }
             else {
-                row.push('-');
+                row.push(' ');
             }
         }
         return `| ${row.join(' | ')} |\n`;
     });
     const output = `\n| ${headers.join(' | ')} |\n| ${headers
-        .map(() => ':------')
+        .map(() => '---')
         .join(' | ')} |\n${rows.join('')}`;
     return output;
 }
 function getDefaultValue(parameter) {
     if (parameter instanceof typedoc_1.TypeParameterReflection) {
-        return parameter.default ? type_1.type.call(parameter.default) : '-';
+        return parameter.default ? type2_1.type.call(parameter.default) : ' ';
     }
     return parameter.defaultValue && parameter.defaultValue !== '...'
         ? escape_1.escape(parameter.defaultValue)
-        : '-';
+        : ' ';
 }
 function hasDefaultValues(kind, parameters) {
     const defaultValues = kind === 'parameters'

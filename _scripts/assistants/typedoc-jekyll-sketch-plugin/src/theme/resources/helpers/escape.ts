@@ -5,3 +5,10 @@ export function escape(str: string) {
     .replace(/`/g, '\\`')
     .replace(/\|/g, '\\|');
 }
+
+export function code_escape(str: string) {
+  return str
+    .replace(/>/g, '>')
+    .replace(/_/g, '\\_')
+    .replace(/\|/g, '\\|');
+}

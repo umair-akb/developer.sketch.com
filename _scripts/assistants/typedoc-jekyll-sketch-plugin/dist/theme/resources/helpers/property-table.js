@@ -5,7 +5,7 @@ const comment_1 = require("./comment");
 const escape_1 = require("./escape");
 const signature_title_1 = require("./signature-title");
 const strip_line_breaks_1 = require("./strip-line-breaks");
-const type_1 = require("./type");
+const type2_1 = require("./type2");
 function propertyTable() {
     const comments = this.map((param) => { var _a, _b, _c, _d; return !!((_b = (_a = param.comment) === null || _a === void 0 ? void 0 : _a.text) === null || _b === void 0 ? void 0 : _b.trim()) || !!((_d = (_c = param.comment) === null || _c === void 0 ? void 0 : _c.shortText) === null || _d === void 0 ? void 0 : _d.trim()); });
     const hasComments = !comments.every((value) => !value);
@@ -40,13 +40,13 @@ function propertyTable() {
             : `\`${getName(property)}\``;
         nameCol.push(name);
         row.push(nameCol.join(' '));
-        row.push(type_1.type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '|'));
+        row.push(type2_1.type.call(propertyType, 'object').replace(/(?<!\\)\|/g, '|'));
         if (hasComments) {
             if (property.comment) {
                 row.push(strip_line_breaks_1.stripLineBreaks(comment_1.comment.call(property.comment)));
             }
             else {
-                row.push('-');
+                row.push(' ');
             }
         }
         return `| ${row.join(' | ')} |\n`;

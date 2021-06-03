@@ -7,7 +7,7 @@ import {
 import { comment } from './comment';
 import { escape } from './escape';
 import { stripLineBreaks } from './strip-line-breaks';
-import { type } from './type';
+import { type } from './type2';
 
 export function parameterTable(
   this: ParameterReflection[] & TypeParameterReflection[],
@@ -69,13 +69,12 @@ function table(parameters: any, kind: 'typeParameters' | 'parameters') {
     const row: string[] = [];
 
     row.push(
-      `\`${parameter.flags.isRest ? '...' : ''}${parameter.name}${
-        parameter.flags.isOptional ? '?' : ''
+      `\`${parameter.flags.isRest ? '...' : ''}${parameter.name}${parameter.flags.isOptional ? '?' : ''
       }\``,
     );
 
     if (showTypes) {
-      row.push(parameter.type ? type.call(parameter.type, 'object') : '-');
+      row.push(parameter.type ? type.call(parameter.type, 'object') : ' ');
     }
 
     if (showDefaults) {
@@ -90,14 +89,14 @@ function table(parameters: any, kind: 'typeParameters' | 'parameters') {
           ),
         );
       } else {
-        row.push('-');
+        row.push(' ');
       }
     }
     return `| ${row.join(' | ')} |\n`;
   });
 
   const output = `\n| ${headers.join(' | ')} |\n| ${headers
-    .map(() => ':------')
+    .map(() => '---')
     .join(' | ')} |\n${rows.join('')}`;
   return output;
 }
@@ -106,11 +105,11 @@ function getDefaultValue(
   parameter: ParameterReflection | TypeParameterReflection,
 ) {
   if (parameter instanceof TypeParameterReflection) {
-    return parameter.default ? type.call(parameter.default) : '-';
+    return parameter.default ? type.call(parameter.default) : ' ';
   }
   return parameter.defaultValue && parameter.defaultValue !== '...'
     ? escape(parameter.defaultValue)
-    : '-';
+    : ' ';
 }
 
 function hasDefaultValues(
@@ -120,11 +119,11 @@ function hasDefaultValues(
   const defaultValues =
     kind === 'parameters'
       ? (parameters as ParameterReflection[]).map(
-          (param) => param.defaultValue !== '...' && !!param.defaultValue,
-        )
+        (param) => param.defaultValue !== '...' && !!param.defaultValue,
+      )
       : (parameters as TypeParameterReflection[]).map(
-          (param) => !!param.default,
-        );
+        (param) => !!param.default,
+      );
   return !defaultValues.every((value) => !value);
 }
 

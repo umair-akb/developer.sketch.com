@@ -4,7 +4,7 @@ import { comment } from './comment';
 import { escape } from './escape';
 import { simpleSignatureTitle as signatureTitle } from './signature-title';
 import { stripLineBreaks } from './strip-line-breaks';
-import { type } from './type';
+import { type } from './type2';
 
 export function propertyTable(this: DeclarationReflection[]) {
   const comments = this.map(
@@ -61,7 +61,7 @@ export function propertyTable(this: DeclarationReflection[]) {
       if (property.comment) {
         row.push(stripLineBreaks(comment.call(property.comment)));
       } else {
-        row.push('-');
+        row.push(' ');
       }
     }
     return `| ${row.join(' | ')} |\n`;
