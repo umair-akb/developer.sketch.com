@@ -1,9 +1,9 @@
 ---
-title: Types
+title: Legacy Types
 section: assistants
 permalink: /assistants/type-reference
 chapter: Reference
-order: 301
+order: 505
 excerpt: Sketch Assistants type reference.
 ---
 
