@@ -51,6 +51,10 @@
 
   .sidebar aside {
     min-width: 13rem;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
   }
 
   .sidebar .content {
