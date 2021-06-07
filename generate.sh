@@ -26,5 +26,5 @@ fi
 
 # Generate Assistants pages
 if [[ $GENERATE_ASSISTANTS -eq 1 ]]; then
-  sh _scripts/assistants/build.sh $SCRIPT_ARGS
+  sh _scripts/generate-assistants/build.sh $SCRIPT_ARGS
 fi

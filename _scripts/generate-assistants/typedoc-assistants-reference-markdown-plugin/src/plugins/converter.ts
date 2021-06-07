@@ -1,9 +1,8 @@
 import * as path from 'path';
 
-import { BindOption, Renderer } from 'typedoc';
-import { Converter } from 'typedoc/dist/lib/converter';
+import { BindOption, Converter, Renderer } from 'typedoc';
 import { Component, ConverterComponent } from 'typedoc/dist/lib/converter/components';
-import { Context } from 'typedoc/dist/lib/converter/context';
+import { Context } from 'typedoc/dist/lib/converter';
 
 @Component({ name: 'jekyll-sketch-converter' })
 export class ConverterPlugin extends ConverterComponent {

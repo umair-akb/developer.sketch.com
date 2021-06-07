@@ -1,5 +1,4 @@
-import { Application } from 'typedoc/dist/lib/application';
-import { ParameterType } from 'typedoc/dist/lib/utils/options/declaration';
+import { Application, ParameterType } from 'typedoc';
 
 import { ConverterPlugin } from './plugins/converter';
 import { TemplatePlugin } from './plugins/template';

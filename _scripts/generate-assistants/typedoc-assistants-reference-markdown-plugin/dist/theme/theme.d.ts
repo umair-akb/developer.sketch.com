@@ -1,8 +1,6 @@
-import { UrlMapping } from 'typedoc';
-import MarkdownTheme from 'typedoc-plugin-markdown/dist/theme';
-import { Renderer } from 'typedoc/dist/lib/output/renderer';
-import { DeclarationReflection, Reflection } from 'typedoc/dist/lib/models';
+import { DeclarationReflection, Reflection, Renderer, UrlMapping } from 'typedoc';
 import { TemplateMapping } from 'typedoc/dist/lib/output/themes/DefaultTheme';
+import MarkdownTheme from 'typedoc-plugin-markdown/dist/theme';
 export default class SketchCustomTheme extends MarkdownTheme {
     renderer: Renderer;
     entryPoints: string[];

@@ -4,7 +4,10 @@ import {
   ProjectReflection,
   Reflection,
   ReflectionKind,
-  ReferenceReflection,
+  ReferenceReflection
+} from 'typedoc';
+
+import {
   ReflectionGroup
 } from 'typedoc/dist/lib/models';
 

@@ -1,9 +1,9 @@
-import { RendererComponent } from 'typedoc/dist/lib/output/components';
 import {
   ProjectReflection,
-  ReflectionGroup,
   ReflectionKind
-} from 'typedoc/dist/lib/models';
+} from 'typedoc';
+import { RendererComponent } from 'typedoc/dist/lib/output/components';
+import { ReflectionGroup } from 'typedoc/dist/lib/models';
 import { PageEvent } from 'typedoc/dist/lib/output/events';
 import { stripMdExt } from '../util/urls';
 import { toTitleCase } from '../util/strings';

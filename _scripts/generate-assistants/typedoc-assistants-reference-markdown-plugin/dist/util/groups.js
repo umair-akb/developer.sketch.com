@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sortReferenceByName = exports.pruneReferences = exports.pruneGroupReferences = exports.importReflection = exports.importReflections = exports.importIntoGroup = exports.hasChild = exports.getGroupsChildren = exports.inspect = void 0;
-const models_1 = require("typedoc/dist/lib/models");
+const typedoc_1 = require("typedoc");
 var util_1 = require("util");
 Object.defineProperty(exports, "inspect", { enumerable: true, get: function () { return util_1.inspect; } });
 function getGroupsChildren(groups) {
@@ -17,14 +17,14 @@ function hasChild(a, b) {
 exports.hasChild = hasChild;
 function importIntoGroup(group, source, project, logger) {
     var _a;
-    if (source.kindOf(models_1.ReflectionKind.SomeModule)) {
+    if (source.kindOf(typedoc_1.ReflectionKind.SomeModule)) {
         source.traverse((child) => {
             importIntoGroup(group, child, project, logger);
         });
         source.children = [];
     }
     else {
-        if (source.kindOf(models_1.ReflectionKind.Reference)) {
+        if (source.kindOf(typedoc_1.ReflectionKind.Reference)) {
             source = source.getTargetReflectionDeep();
         }
         if (!hasChild(project.children, source)) {
@@ -36,7 +36,7 @@ function importIntoGroup(group, source, project, logger) {
 }
 exports.importIntoGroup = importIntoGroup;
 function importReflections(source, target) {
-    if (source.kindOf(models_1.ReflectionKind.SomeModule)) {
+    if (source.kindOf(typedoc_1.ReflectionKind.SomeModule)) {
         source.traverse((child) => {
             importReflections(child, target);
         });
@@ -56,10 +56,10 @@ exports.importReflection = importReflection;
 function pruneGroupReferences(group) {
     const nonReferenceReflections = group
         .children
-        .filter(child => !child.kindOf(models_1.ReflectionKind.Reference));
+        .filter(child => !child.kindOf(typedoc_1.ReflectionKind.Reference));
     group
         .children
-        .filter(child => child.kindOf(models_1.ReflectionKind.Reference))
+        .filter(child => child.kindOf(typedoc_1.ReflectionKind.Reference))
         .forEach((ref) => {
         var _a;
         if (nonReferenceReflections.find(ref => ref.name == ref.name)) {
@@ -73,9 +73,9 @@ function pruneGroupReferences(group) {
 exports.pruneGroupReferences = pruneGroupReferences;
 function pruneReferences(parent) {
     const nonReferenceReflections = parent
-        .getChildrenByKind(models_1.ReflectionKind.All ^ models_1.ReflectionKind.Reference);
+        .getChildrenByKind(typedoc_1.ReflectionKind.All ^ typedoc_1.ReflectionKind.Reference);
     parent
-        .getChildrenByKind(models_1.ReflectionKind.Reference)
+        .getChildrenByKind(typedoc_1.ReflectionKind.Reference)
         .forEach((ref) => {
         var _a, _b;
         if (nonReferenceReflections.find(ref => ref.name == ref.name)) {

@@ -1,15 +1,18 @@
-import { BindOption, UrlMapping } from 'typedoc';
-import MarkdownTheme from 'typedoc-plugin-markdown/dist/theme';
-import { ContextAwareHelpers } from 'typedoc-plugin-markdown/dist/components/options';
-import { Renderer } from 'typedoc/dist/lib/output/renderer';
 import {
+  BindOption,
   DeclarationReflection,
   Reflection,
-  ReflectionKind
-} from 'typedoc/dist/lib/models';
+  ReflectionKind,
+  Renderer,
+  UrlMapping
+} from 'typedoc';
 import { TemplateMapping } from 'typedoc/dist/lib/output/themes/DefaultTheme';
 
+import MarkdownTheme from 'typedoc-plugin-markdown/dist/theme';
+import { ContextAwareHelpers } from 'typedoc-plugin-markdown/dist/components/options';
+
 import { stripMdExt } from '../util/urls';
+
 export default class SketchCustomTheme extends MarkdownTheme {
   renderer: Renderer;
   @BindOption('entryPoints')

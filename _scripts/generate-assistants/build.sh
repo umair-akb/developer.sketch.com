@@ -1,13 +1,14 @@
 #!/bin/sh
 
+REL_MODULE_BIN="$PWD/_scripts/generate-assistants/node_modules"
 LOCAL_ASSISTANTS_PATH=_deps/sketch-assistants
 LOCAL_ASSISTANTS_OUT_PATH=pages/assistants
 REL_ASSISTANTS_PACKAGES=packages
 REL_ASSISTANTS_PACKAGE_UTILS=utils/src
 REL_ASSISTANTS_PACKAGE_TYPES=types/src
-TYPEDOC_RUN_PLUGIN="typedoc-jekyll-sketch-plugin"
+TYPEDOC_RUN_PLUGIN="typedoc-assistants-reference-markdown-plugin"
 # TYPEDOC_RUN_PLUGIN="typedoc-plugin-markdown"
-TYPEDOC_CUSTOM_PLUGIN="$PWD/node_modules/typedoc-jekyll-sketch-plugin"
+TYPEDOC_CUSTOM_PLUGIN="$REL_MODULE_BIN/typedoc-assistants-reference-markdown-plugin"
 TYPEDOC_CUSTOM_THEME="--theme $TYPEDOC_CUSTOM_PLUGIN/dist/theme"
 # TYPEDOC_CUSTOM_THEME=""
 SKIP_INSTALL=0
@@ -41,7 +42,7 @@ TYPEDOC_BIN=`which typedoc &>/dev/null`
 
 if [[ $? -ne 0 ]]; then
 
-  TYPEDOC_BIN="$PWD/node_modules/typedoc/bin/typedoc"
+  TYPEDOC_BIN="$REL_MODULE_BIN/typedoc/bin/typedoc"
 
   if ! [ -x "$(command -v $TYPEDOC_BIN)" ]; then
     echo "Error: typedoc not found on system. Did you run \"npm install\"?" >&2
@@ -49,6 +50,18 @@ if [[ $? -ne 0 ]]; then
   fi
 
 fi
+
+# TSC_BIN=`which tsc &>/dev/null`
+# if [[ $? -ne 0 ]]; then
+
+#   TSC_BIN="$REL_MODULE_BIN/typescript/bin/tsc"
+
+#   if ! [ -x "$(command -v $TYPEDOC_BIN)" ]; then
+#     echo "Error: tsc not found on system. Did you run \"npm install\"?" >&2
+#     exit 1
+#   fi
+
+# fi
 
 if [[ $SKIP_FETCH -eq 0 ]]; then
   if [[ $SKIP_FETCH_PROMPT -eq 0 ]]; then

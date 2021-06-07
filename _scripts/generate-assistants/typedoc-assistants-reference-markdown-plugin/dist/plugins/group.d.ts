@@ -4,7 +4,8 @@
  * Did not define a new class to extend GroupPlugin due to the
  * private methods that needed changed.
  */
-import { Reflection, ReflectionKind, ReflectionGroup } from "typedoc/dist/lib/models";
+import { Reflection, ReflectionKind } from 'typedoc';
+import { ReflectionGroup } from "typedoc/dist/lib/models";
 import { ConverterComponent } from "typedoc/dist/lib/converter/components";
 /**
 * A handler that sorts and groups the found reflections in the resolving phase.

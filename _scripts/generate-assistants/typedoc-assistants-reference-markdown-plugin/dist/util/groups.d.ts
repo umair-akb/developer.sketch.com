@@ -1,4 +1,5 @@
-import { ContainerReflection, DeclarationReflection, ProjectReflection, Reflection, ReflectionGroup } from 'typedoc/dist/lib/models';
+import { ContainerReflection, DeclarationReflection, ProjectReflection, Reflection } from 'typedoc';
+import { ReflectionGroup } from 'typedoc/dist/lib/models';
 export { inspect } from 'util';
 export declare function getGroupsChildren(groups: ReflectionGroup[]): Reflection[];
 export declare function hasChild(a: Reflection[] | undefined, b: Reflection): Boolean;

@@ -1,5 +1,5 @@
 {
-  "name": "typedoc-jekyll-sketch-plugin",
+  "name": "typedoc-assistants-reference-markdown-plugin",
   "version": "1.0.0",
   "description": "A TypeDoc plugin to render Jekyll templates",
   "main": "dist/index.js",
@@ -9,6 +9,7 @@
   "dependencies": {
     "@types/node": "^15.0.3",
     "typedoc": "^0.20.36",
+    "typedoc-plugin-markdown": "^3.8.1",
     "typescript": "~4.2.4"
   },
   "engines": {

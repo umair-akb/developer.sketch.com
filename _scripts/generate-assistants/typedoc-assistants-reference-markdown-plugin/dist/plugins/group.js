@@ -14,9 +14,9 @@ exports.GroupPlugin = void 0;
  * Did not define a new class to extend GroupPlugin due to the
  * private methods that needed changed.
  */
+const typedoc_1 = require("typedoc");
 const models_1 = require("typedoc/dist/lib/models");
 const components_1 = require("typedoc/dist/lib/converter/components");
-const converter_1 = require("typedoc/dist/lib/converter");
 const GroupUtils = require("../util/groups");
 /**
 * A handler that sorts and groups the found reflections in the resolving phase.
@@ -29,8 +29,8 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
      */
     initialize() {
         this.listenTo(this.owner, {
-            [converter_1.Converter.EVENT_RESOLVE]: this.onResolve,
-            [converter_1.Converter.EVENT_RESOLVE_END]: this.onEndResolve,
+            [typedoc_1.Converter.EVENT_RESOLVE]: this.onResolve,
+            [typedoc_1.Converter.EVENT_RESOLVE_END]: this.onEndResolve,
         });
     }
     /**
@@ -41,7 +41,7 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
      */
     onResolve(_context, reflection) {
         reflection.kindString = GroupPlugin_1.getKindSingular(reflection.kind);
-        if (reflection instanceof models_1.ContainerReflection) {
+        if (reflection instanceof typedoc_1.ContainerReflection) {
             this.group(reflection);
         }
     }
@@ -74,12 +74,12 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
                 .sort(GroupUtils.sortReferenceByName)
                 .forEach((child) => {
                 var _a;
-                if (child.kindOf(models_1.ReflectionKind.SomeModule)) {
+                if (child.kindOf(typedoc_1.ReflectionKind.SomeModule)) {
                     if (child.name == 'index' || child.name == 'global') {
                         // Exclude index direct submodule of project.
                         return;
                     }
-                    const group = new models_1.ReflectionGroup(child.name, models_1.ReflectionKind.All);
+                    const group = new models_1.ReflectionGroup(child.name, typedoc_1.ReflectionKind.All);
                     GroupUtils.importIntoGroup(group, child, reflection, this.application.logger);
                     if (group.children.length > 0) {
                         // Sort imported child reflections, by name
@@ -140,7 +140,7 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
                     (child.flags.isPrivate || child.flags.isProtected) &&
                         allProtected;
                 allExternal = child.flags.isExternal && allExternal;
-                if (child instanceof models_1.DeclarationReflection) {
+                if (child instanceof typedoc_1.DeclarationReflection) {
                     allInherited = !!child.inheritedFrom && allInherited;
                 }
                 else {
@@ -161,7 +161,7 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
      * @returns A human readable version of the given typescript kind identifier.
      */
     static getKindString(kind) {
-        let str = models_1.ReflectionKind[kind];
+        let str = typedoc_1.ReflectionKind[kind];
         str = str.replace(/(.)([A-Z])/g, (_m, a, b) => a + " " + b.toLowerCase());
         return str;
     }
@@ -224,47 +224,47 @@ let GroupPlugin = GroupPlugin_1 = class GroupPlugin extends components_1.Convert
  * Define the sort order of reflections.
  */
 GroupPlugin.WEIGHTS = [
-    models_1.ReflectionKind.Project,
-    models_1.ReflectionKind.Module,
-    models_1.ReflectionKind.Namespace,
-    models_1.ReflectionKind.Enum,
-    models_1.ReflectionKind.EnumMember,
-    models_1.ReflectionKind.Class,
-    models_1.ReflectionKind.Interface,
-    models_1.ReflectionKind.TypeAlias,
-    models_1.ReflectionKind.Constructor,
-    models_1.ReflectionKind.Event,
-    models_1.ReflectionKind.Property,
-    models_1.ReflectionKind.Variable,
-    models_1.ReflectionKind.Function,
-    models_1.ReflectionKind.Accessor,
-    models_1.ReflectionKind.Method,
-    models_1.ReflectionKind.ObjectLiteral,
-    models_1.ReflectionKind.Parameter,
-    models_1.ReflectionKind.TypeParameter,
-    models_1.ReflectionKind.TypeLiteral,
-    models_1.ReflectionKind.CallSignature,
-    models_1.ReflectionKind.ConstructorSignature,
-    models_1.ReflectionKind.IndexSignature,
-    models_1.ReflectionKind.GetSignature,
-    models_1.ReflectionKind.SetSignature,
+    typedoc_1.ReflectionKind.Project,
+    typedoc_1.ReflectionKind.Module,
+    typedoc_1.ReflectionKind.Namespace,
+    typedoc_1.ReflectionKind.Enum,
+    typedoc_1.ReflectionKind.EnumMember,
+    typedoc_1.ReflectionKind.Class,
+    typedoc_1.ReflectionKind.Interface,
+    typedoc_1.ReflectionKind.TypeAlias,
+    typedoc_1.ReflectionKind.Constructor,
+    typedoc_1.ReflectionKind.Event,
+    typedoc_1.ReflectionKind.Property,
+    typedoc_1.ReflectionKind.Variable,
+    typedoc_1.ReflectionKind.Function,
+    typedoc_1.ReflectionKind.Accessor,
+    typedoc_1.ReflectionKind.Method,
+    typedoc_1.ReflectionKind.ObjectLiteral,
+    typedoc_1.ReflectionKind.Parameter,
+    typedoc_1.ReflectionKind.TypeParameter,
+    typedoc_1.ReflectionKind.TypeLiteral,
+    typedoc_1.ReflectionKind.CallSignature,
+    typedoc_1.ReflectionKind.ConstructorSignature,
+    typedoc_1.ReflectionKind.IndexSignature,
+    typedoc_1.ReflectionKind.GetSignature,
+    typedoc_1.ReflectionKind.SetSignature,
 ];
 /**
  * Define the singular name of individual reflection kinds.
  */
 GroupPlugin.SINGULARS = {
-    [models_1.ReflectionKind.Enum]: "Enumeration",
-    [models_1.ReflectionKind.EnumMember]: "Enumeration member",
+    [typedoc_1.ReflectionKind.Enum]: "Enumeration",
+    [typedoc_1.ReflectionKind.EnumMember]: "Enumeration member",
 };
 /**
  * Define the plural name of individual reflection kinds.
  */
 GroupPlugin.PLURALS = {
-    [models_1.ReflectionKind.Class]: "Classes",
-    [models_1.ReflectionKind.Property]: "Properties",
-    [models_1.ReflectionKind.Enum]: "Enumerations",
-    [models_1.ReflectionKind.EnumMember]: "Enumeration members",
-    [models_1.ReflectionKind.TypeAlias]: "Type aliases",
+    [typedoc_1.ReflectionKind.Class]: "Classes",
+    [typedoc_1.ReflectionKind.Property]: "Properties",
+    [typedoc_1.ReflectionKind.Enum]: "Enumerations",
+    [typedoc_1.ReflectionKind.EnumMember]: "Enumeration members",
+    [typedoc_1.ReflectionKind.TypeAlias]: "Type aliases",
 };
 GroupPlugin = GroupPlugin_1 = __decorate([
     components_1.Component({ name: "jekyll-sketch-group" })

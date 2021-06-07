@@ -5,16 +5,19 @@
  * private methods that needed changed.
  */
 import {
+  Converter,
   Reflection,
   ReflectionKind,
   ContainerReflection,
-  DeclarationReflection,
+  DeclarationReflection
+} from 'typedoc';
+
+import {
   ReflectionGroup,
-  // ProjectReflection,
   SourceDirectory
 } from "typedoc/dist/lib/models";
 import { Component, ConverterComponent } from "typedoc/dist/lib/converter/components";
-import { Converter, Context } from "typedoc/dist/lib/converter";
+import { Context } from "typedoc/dist/lib/converter";
 
 import * as GroupUtils from '../util/groups';
 

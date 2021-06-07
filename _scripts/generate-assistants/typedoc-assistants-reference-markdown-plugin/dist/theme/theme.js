@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 const typedoc_1 = require("typedoc");
 const theme_1 = require("typedoc-plugin-markdown/dist/theme");
-const models_1 = require("typedoc/dist/lib/models");
 const urls_1 = require("../util/urls");
 class SketchCustomTheme extends theme_1.default {
     constructor(renderer, basePath) {
@@ -46,7 +45,7 @@ class SketchCustomTheme extends theme_1.default {
         if (!reflection.url || !theme_1.default.URL_PREFIX.test(reflection.url)) {
             const reflectionId = reflection.name.toLowerCase();
             const anchor = this.toAnchorRef(reflectionId);
-            if (reflection.kindOf(models_1.ReflectionKind.EnumMember)) {
+            if (reflection.kindOf(typedoc_1.ReflectionKind.EnumMember)) {
                 reflection.url = container.url + '-' + anchor;
             }
             else {
@@ -56,7 +55,7 @@ class SketchCustomTheme extends theme_1.default {
             reflection.hasOwnDocument = false;
         }
         reflection.traverse((child) => {
-            if (child instanceof models_1.DeclarationReflection) {
+            if (child instanceof typedoc_1.DeclarationReflection) {
                 this.applyAnchorUrl(child, container);
             }
         });

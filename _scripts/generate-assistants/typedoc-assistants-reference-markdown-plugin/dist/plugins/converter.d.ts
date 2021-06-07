@@ -1,5 +1,5 @@
 import { ConverterComponent } from 'typedoc/dist/lib/converter/components';
-import { Context } from 'typedoc/dist/lib/converter/context';
+import { Context } from 'typedoc/dist/lib/converter';
 export declare class ConverterPlugin extends ConverterComponent {
     theme: string;
     initialize(): void;

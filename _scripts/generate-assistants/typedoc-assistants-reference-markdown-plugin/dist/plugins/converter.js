@@ -9,13 +9,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConverterPlugin = void 0;
 const path = require("path");
 const typedoc_1 = require("typedoc");
-const converter_1 = require("typedoc/dist/lib/converter");
 const components_1 = require("typedoc/dist/lib/converter/components");
 let ConverterPlugin = class ConverterPlugin extends components_1.ConverterComponent {
     initialize() {
         // This has to be -1 priority to run first and set the `getDefaultTheme` static function.
-        this.listenTo(this.owner, converter_1.Converter.EVENT_BEGIN, this.onConverterBegin, -1);
-        this.listenTo(this.owner, converter_1.Converter.EVENT_RESOLVE_BEGIN, this.onResolveBegin);
+        this.listenTo(this.owner, typedoc_1.Converter.EVENT_BEGIN, this.onConverterBegin, -1);
+        this.listenTo(this.owner, typedoc_1.Converter.EVENT_RESOLVE_BEGIN, this.onResolveBegin);
     }
     /**
      * Overide default assets

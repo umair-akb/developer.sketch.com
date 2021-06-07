@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TemplatePlugin = void 0;
+const typedoc_1 = require("typedoc");
 const components_1 = require("typedoc/dist/lib/output/components");
-const models_1 = require("typedoc/dist/lib/models");
 const events_1 = require("typedoc/dist/lib/output/events");
 const urls_1 = require("../util/urls");
 const strings_1 = require("../util/strings");
@@ -71,10 +71,10 @@ definitions: ${definitions}
             return strings_1.toTitleCase(reflection.name);
         }
         switch (reflection.kind) {
-            case models_1.ReflectionKind.Enum:
+            case typedoc_1.ReflectionKind.Enum:
                 return 'Enums';
-            case models_1.ReflectionKind.Module:
-            case models_1.ReflectionKind.Namespace:
+            case typedoc_1.ReflectionKind.Module:
+            case typedoc_1.ReflectionKind.Namespace:
                 return 'Modules';
             default:
                 return null;
