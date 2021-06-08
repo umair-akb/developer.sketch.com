@@ -7,8 +7,10 @@ LOCAL_ASSISTANTS_OUT_PATH=pages/assistants
 REL_ASSISTANTS_PACKAGES=packages
 REL_ASSISTANTS_PACKAGE_UTILS=utils/src
 REL_ASSISTANTS_PACKAGE_TYPES=types/src
-TYPEDOC_RUN_PLUGIN="typedoc-assistants-reference-markdown-plugin"
+TYPEDOC_CUSTOM_PLUGIN_NAME="typedoc-assistants-reference-markdown-plugin"
+TYPEDOC_RUN_PLUGIN="$TYPEDOC_CUSTOM_PLUGIN_NAME"
 # TYPEDOC_RUN_PLUGIN="typedoc-plugin-markdown"
+TYPEDOC_CUSTOM_PLUGIN_SRC="$REL_PWD/$TYPEDOC_CUSTOM_PLUGIN_NAME"
 TYPEDOC_CUSTOM_PLUGIN="$REL_MODULE_BIN/typedoc-assistants-reference-markdown-plugin"
 TYPEDOC_CUSTOM_THEME="--theme $TYPEDOC_CUSTOM_PLUGIN/dist/theme"
 # TYPEDOC_CUSTOM_THEME=""
@@ -16,6 +18,7 @@ SKIP_INSTALL=0
 SKIP_FETCH=0
 SKIP_FETCH_PROMPT=0
 SKIP_YARN=0
+SKIP_PLUGIN_BUILD=0
 
 # Loop through command arguments
 while [ "$1" != "" ];
@@ -37,11 +40,24 @@ do
    -NY | --skip-yarn ) shift
                           SKIP_YARN=1;
                           ;;
+   -NP | --skip-plugin-build ) shift
+                          SKIP_PLUGIN_BUILD=1;
+                          ;;
    *)
     shift
                           ;;
     esac
 done
+
+if [[ $SKIP_PLUGIN_BUILD -eq 0 ]]; then
+  $(cd "$TYPEDOC_CUSTOM_PLUGIN_SRC"; yarn >&2; npm run build >&2)
+
+  if [[ $? -ne 0 ]]; then
+    echo "Failed to install typedoc plugin"
+    exit 1
+  fi
+fi
+
 
 if [[ $SKIP_YARN -eq 0 ]]; then
   $(cd "$REL_PWD"; yarn >&2)
