@@ -1,6 +1,7 @@
 #!/bin/sh
 
-REL_MODULE_BIN="$PWD/_scripts/generate-assistants/node_modules"
+REL_PWD="$PWD/_scripts/generate-assistants"
+REL_MODULE_BIN="$REL_PWD/node_modules"
 LOCAL_ASSISTANTS_PATH=_deps/sketch-assistants
 LOCAL_ASSISTANTS_OUT_PATH=pages/assistants
 REL_ASSISTANTS_PACKAGES=packages
@@ -14,6 +15,7 @@ TYPEDOC_CUSTOM_THEME="--theme $TYPEDOC_CUSTOM_PLUGIN/dist/theme"
 SKIP_INSTALL=0
 SKIP_FETCH=0
 SKIP_FETCH_PROMPT=0
+SKIP_YARN=0
 
 # Loop through command arguments
 while [ "$1" != "" ];
@@ -32,11 +34,18 @@ do
    -NFP | --skip-prompt )  shift
                           SKIP_FETCH_PROMPT=1
                           ;;
+   -NY | --skip-yarn ) shift
+                          SKIP_YARN=1;
+                          ;;
    *)
     shift
                           ;;
     esac
 done
+
+if [[ $SKIP_YARN -eq 0 ]]; then
+  $(cd "$REL_PWD"; yarn >&2)
+fi
 
 TYPEDOC_BIN=`which typedoc &>/dev/null`
 
