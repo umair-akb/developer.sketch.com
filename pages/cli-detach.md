@@ -30,7 +30,7 @@ Creates a self-contained Sketch document, applying and detaching:
 - [Library Styles](https://www.sketch.com/docs/libraries/library-styles)
 - [Library Symbols](https://www.sketch.com/docs/libraries/library-symbols)
 
-Detached Symbol Layers include custom data in `userInfo` for the `com.bohemiancoding.sketchtool.detach` key, describing what Symbol the layer has previously been an instance of.
+Detached Symbol Layers include custom data in `userInfo` for the `com.sketch.detach` key, describing what Symbol the layer has previously been an instance of.
 
 ```json
 {
@@ -39,7 +39,7 @@ Detached Symbol Layers include custom data in `userInfo` for the `com.bohemianco
     "do_objectID": "99486339-89A6-4395-BC9C-4A4A606F2D18",
     ...
     "userInfo": {
-      "com.bohemiancoding.sketchtool.detach": {
+      "com.sketch.detach": {
         "symbolInstance": {
           "do_objectID": "0A01E27B-27DF-433A-BE21-76C08564AF4E",
           "frame": {
