@@ -1,5 +1,5 @@
 ---
-title: Build something beautiful
+title: Build something beautiful #elmo was here
 permalink: /
 
 redirect_from:
